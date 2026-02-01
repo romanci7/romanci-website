@@ -3,144 +3,193 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ROMANCI — Vouches</title>
+<title>ROMANCI — Vouch</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --gold:#c9a24d;
-    --gold-dark:#a8842c;
-    --cream:#fff8ec;
-    --bg:#fbf6ee;
+    --gold: #c9a24d;
+    --gold-dark: #a8842c;
+    --cream: #fff8ec;
+    --bg: linear-gradient(135deg,#fffaf0,#f6efe0);
     --muted:#6b655a;
-    --card: rgba(255,255,255,0.97);
+    --glass-bg: rgba(255,255,255,0.10);
+    --glass-border: rgba(255,255,255,0.18);
+    --card-shadow: 0 18px 50px rgba(0,0,0,0.06);
   }
   *{box-sizing:border-box}
   body{
     margin:0;
-    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-    background: linear-gradient(135deg,#fffaf0,#f6efe0);
-    color:#222;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: var(--bg);
     -webkit-font-smoothing:antialiased;
+    color:#222;
   }
 
-  header{ text-align:center; padding:36px 20px 8px; }
-  header h1{ font-family:'Playfair Display', serif; font-size:36px; color:var(--gold); margin:0; letter-spacing:2px; }
+  header{ text-align:center; padding:40px 20px 6px; }
+  header h1{ font-family:'Playfair Display', serif; font-size:36px; color:var(--gold); margin:0; letter-spacing:1px; }
   header p{ color:var(--muted); margin:8px 0 0; }
 
-  .wrap{ max-width:980px; margin:0 auto 80px; padding:0 20px; }
+  .wrap{ max-width:1060px; margin:0 auto 80px; padding:0 20px; }
   .grid{ display:grid; grid-template-columns:1fr 380px; gap:28px; align-items:start; }
   @media (max-width:960px){ .grid{ grid-template-columns:1fr; } }
 
-  .card{ background:var(--card); border-radius:16px; padding:22px; box-shadow:0 18px 50px rgba(0,0,0,0.06); border:1px solid rgba(201,162,77,0.10); }
-  h2{ margin:0 0 10px; color:var(--gold-dark); font-family:'Playfair Display'; }
-
-  label{ display:block; font-size:0.9rem; color:#4a463f; margin-top:12px; margin-bottom:6px; }
-  input[type="text"], textarea {
-    width:100%; padding:12px 12px; border-radius:10px; border:1px solid #e6ddd0; background:white; font-size:1rem; resize:none;
+  /* Liquid glass card */
+  .glass {
+    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.12));
+    border-radius:16px;
+    padding:22px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(201,162,77,0.08);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    transition: transform .35s cubic-bezier(.2,.9,.2,1), box-shadow .35s;
   }
-  input:focus, textarea:focus { outline:none; box-shadow:0 8px 24px rgba(201,162,77,0.12); border-color:var(--gold); }
+  .glass:hover{ transform: translateY(-6px); box-shadow: 0 28px 80px rgba(0,0,0,0.08); }
 
-  .submit-row{ display:flex; gap:12px; margin-top:16px; align-items:center; }
+  h2 { margin:0 0 10px; color:var(--gold-dark); font-family:'Playfair Display'; }
+  label{ display:block; margin-top:12px; color:#544c41; font-size:0.9rem; }
+  input[type="text"], textarea {
+    width:100%; padding:12px 14px; margin-top:6px; border-radius:10px; border:1px solid rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.92);
+    font-size:1rem;
+    resize:none;
+  }
+  input:focus, textarea:focus { outline:none; box-shadow:0 8px 30px rgba(201,162,77,0.12); border-color:var(--gold); }
+
+  .row { display:flex; gap:12px; align-items:center; margin-top:14px; }
   .btn {
     background: linear-gradient(135deg,var(--gold),var(--gold-dark));
-    color:#fff; border:none; padding:12px 20px; border-radius:12px; cursor:pointer; font-weight:600; box-shadow:0 12px 30px rgba(201,162,77,0.16);
+    color:#fff; border:none; padding:12px 18px; border-radius:12px; cursor:pointer; font-weight:600;
+    box-shadow: 0 12px 30px rgba(201,162,77,0.16);
   }
-  .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+  .btn[disabled]{ opacity:0.6; cursor:not-allowed; box-shadow:none; transform:none; }
 
-  .cooldown{ color:#8a7661; font-size:0.95rem; }
+  .muted { color:var(--muted); font-size:0.95rem; }
 
-  .feed .title{ color:var(--gold-dark); font-family:'Playfair Display'; margin-bottom:8px; }
-  .vouches{ display:grid; gap:12px; margin-top:6px; }
-  .vouch{ background:linear-gradient(180deg, rgba(255,255,255,0.98), #fff); padding:12px; border-radius:12px; border:1px solid rgba(201,162,77,0.06); box-shadow:0 8px 25px rgba(0,0,0,0.04); }
-  .vouch .name{ color:var(--gold-dark); font-weight:700; margin-bottom:6px; }
-  .vouch .text{ color:#444; line-height:1.5; }
+  /* Feed */
+  .feed .title { color:var(--gold-dark); font-family:'Playfair Display'; margin-bottom:8px; }
+  .vouches { display:grid; gap:12px; margin-top:6px; max-height:520px; overflow:auto; padding-right:6px; }
+  .vouch {
+    border-radius:12px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.98), #fff);
+    border:1px solid rgba(201,162,77,0.06); box-shadow:0 10px 25px rgba(0,0,0,0.04);
+  }
+  .vouch .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .vouch .name { color:var(--gold-dark); font-weight:700; }
+  .vouch .time { font-size:0.85rem; color:#7a746a; }
 
-  /* popup modal */
-  .modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity .28s ease; z-index:999; }
+  /* small UI */
+  .hint { font-size:0.9rem; color:#6e665c; margin-top:8px; }
+
+  /* Modal */
+  .modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.46); opacity:0; pointer-events:none; transition:opacity .28s; z-index:999; }
   .modal.show{ opacity:1; pointer-events:auto; }
-  .modal-card{ background: linear-gradient(180deg,#fff,#fffaf8); border-radius:14px; padding:22px; width:340px; max-width:92%; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.32); transform:translateY(18px) scale(.98); transition:transform .36s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; }
+  .modal-card{
+    background: linear-gradient(180deg,#fff,#fffaf8);
+    border-radius:14px; padding:22px; width:360px; text-align:center;
+    transform:translateY(12px) scale(.98); transition: transform .36s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0;
+  }
   .modal.show .modal-card{ transform:translateY(0) scale(1); opacity:1; }
-  .rlogo{ width:72px; height:72px; margin:0 auto 8px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-family:'Playfair Display'; font-size:34px; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); box-shadow:0 8px 30px rgba(201,162,77,0.25); }
-  .modal-card h4{ margin:6px 0 4px; color:var(--gold-dark); font-size:20px; }
+  .r-icon {
+    width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    margin:0 auto 10px; font-family:'Playfair Display'; font-size:30px;
+    background: linear-gradient(135deg,var(--gold),var(--gold-dark)); color:white; box-shadow:0 10px 30px rgba(201,162,77,0.22);
+  }
+  .modal-card h3{ margin:6px 0 4px; color:var(--gold-dark); font-size:18px; }
   .modal-card p{ color:#5b544b; margin:8px 0 12px; }
-  .modal-actions{ display:flex; gap:10px; justify-content:center; margin-top:8px; }
-  .link-btn{ padding:10px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06); color:#333; text-decoration:none; font-weight:600; background:transparent; }
 
-  .small{ font-size:0.9rem; color:#6e665c; margin-top:10px; display:block; }
+  .icon-btn {
+    display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06);
+    background:transparent; text-decoration:none; color:#333; font-weight:700;
+  }
+  .icon-svg { width:18px; height:18px; fill:currentColor; }
+
+  /* tiny responsive */
+  @media (max-width:600px){
+    .grid { grid-template-columns:1fr; }
+  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>ROMANCI VOUCH</h1>
-  <p>Share a short vouch — visible after admin approval. (One vouch per device every 12 hours)</p>
+  <p>One vouch every 12 hours. Enter the passcode to submit. Vouches appear publicly in real time.</p>
 </header>
 
 <div class="wrap">
   <div class="grid">
 
-    <!-- LEFT: Submit -->
-    <div class="card">
+    <!-- Left: Submit -->
+    <div class="glass">
       <h2>Leave a Vouch</h2>
-      <form id="vouchForm">
+
+      <form id="form" autocomplete="off">
+        <label for="code">Passcode</label>
+        <input id="code" type="text" placeholder="Enter code to vouch (example: ROMANCI)" autocomplete="off" required>
+
         <label for="name">Name</label>
         <input id="name" type="text" placeholder="Your name or handle" required>
 
         <label for="message">Vouch</label>
-        <textarea id="message" rows="5" placeholder="Why ROMANCI stood out..." required></textarea>
+        <textarea id="message" rows="5" placeholder="Describe your experience with ROMANCI" required></textarea>
 
-        <div class="submit-row">
-          <button class="btn" id="submitBtn" type="submit">Submit Vouch</button>
+        <div class="row">
+          <button class="btn" id="submitBtn" type="submit">Submit</button>
           <div style="flex:1">
-            <div id="cooldownMsg" class="cooldown">You can submit once every 12 hours.</div>
+            <div id="cooldownMsg" class="muted">You can submit once every 12 hours.</div>
           </div>
         </div>
 
-        <div class="small">Your vouch will be reviewed by admin before appearing.</div>
+        <div class="hint">Tip: passcode is required so only trusted people can post.</div>
       </form>
     </div>
 
-    <!-- RIGHT: Feed -->
-    <aside class="card feed">
+    <!-- Right: Feed -->
+    <aside class="glass feed">
       <div class="title">Community Vouches</div>
-      <div id="vouches" class="vouches">
-        <!-- approved vouches will appear here -->
-      </div>
+      <div id="vouches" class="vouches" aria-live="polite"></div>
     </aside>
 
   </div>
 </div>
 
-<!-- modal -->
+<!-- Thank you modal -->
 <div id="modal" class="modal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true">
-    <div class="rlogo" title="ROMANCI">R</div>
-    <h4>Thank you from ROMANCI</h4>
-    <p>Your vouch was received. We'll review it shortly.</p>
-    <div class="modal-actions">
-      <a class="link-btn" href="index.html">🏠 Home</a>
-      <a class="link-btn" href="#vouches" id="showVouchesBtn">⭐ Show Vouches</a>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="r-icon" aria-hidden="true">R</div>
+    <h3 id="modalTitle">Thank you from ROMANCI</h3>
+    <p>Your vouch is live. Thank you for contributing.</p>
+    <div style="margin-top:10px">
+      <a class="icon-btn" href="index.html" id="homeBtn">
+        <!-- Home SVG icon -->
+        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V11.5z"/></svg>
+        Home
+      </a>
     </div>
   </div>
 </div>
 
-<!-- Firebase + App logic -->
+<!-- Firebase & app logic -->
 <script type="module">
+/* ================== IMPORTANT ==================
+  const firebaseConfig = {
+  apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
+  authDomain: "romanci-vouch.firebaseapp.com",
+  projectId: "romanci-vouch",
+  storageBucket: "romanci-vouch.firebasestorage.app",
+  messagingSenderId: "154787033593",
+  appId: "1:154787033593:web:24d3185cdedfdbaded8d28",
+  measurementId: "G-W6SHFKE1EC"
+};
+============================================== */
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  where,
-  orderBy,
-  onSnapshot,
-  serverTimestamp,
-  getDocs,
-  Timestamp
+  getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp,
+  getDocs, where, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-/* ===== REPLACE with your firebase config object from Project Settings ===== */
+/* PASTE YOUR FIREBASE CONFIG OBJECT HERE */
 const firebaseConfig = {
   apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
   authDomain: "romanci-vouch.firebaseapp.com",
@@ -150,86 +199,34 @@ const firebaseConfig = {
   appId: "1:154787033593:web:24d3185cdedfdbaded8d28",
   measurementId: "G-W6SHFKE1EC"
 };
-/* ======================================================================== */
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ---------- Cooldown settings ---------- */
+/* ---------- settings ---------- */
+const PASSCODE = "ROMANCI"; // required code (case-insensitive)
 const COOLDOWN_MS = 12 * 60 * 60 * 1000; // 12 hours
-const LAST_KEY = 'romanci_last_vouch_ts_v1';
+const CLIENT_KEY = "romanci_client_v3";
+const LAST_KEY = "romanci_last_ts_v3";
 
-/* Elements */
-const form = document.getElementById('vouchForm');
+/* ---------- client id ---------- */
+let clientId = localStorage.getItem(CLIENT_KEY);
+if(!clientId){
+  clientId = 'c_' + Math.random().toString(36).slice(2,12);
+  localStorage.setItem(CLIENT_KEY, clientId);
+}
+
+/* ---------- DOM ---------- */
+const form = document.getElementById('form');
+const codeInput = document.getElementById('code');
 const nameInput = document.getElementById('name');
 const msgInput = document.getElementById('message');
 const submitBtn = document.getElementById('submitBtn');
 const cooldownMsg = document.getElementById('cooldownMsg');
 const vouchesEl = document.getElementById('vouches');
 const modal = document.getElementById('modal');
-const showVouchesBtn = document.getElementById('showVouchesBtn');
 
-/* Helper: escape for safe DOM insertion */
-function escapeHtml(s){
-  if(!s) return '';
-  return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-}
-
-/* ---------- Update UI with approved vouches only ---------- */
-(function listenApproved(){
-  try {
-    const q = query(
-      collection(db,'vouches'),
-      where('approved','==', true),
-      orderBy('timestamp','desc')
-    );
-    onSnapshot(q, snap => {
-      vouchesEl.innerHTML = '';
-      snap.forEach(doc => {
-        const d = doc.data();
-        const wrap = document.createElement('div');
-        wrap.className = 'vouch';
-        const name = escapeHtml(d.name || d.author || 'Anonymous');
-        const text = escapeHtml(d.message || d.text || '');
-        wrap.innerHTML = `<div class="name">${name}</div><div class="text">${text}</div>`;
-        vouchesEl.appendChild(wrap);
-      });
-    }, err => {
-      console.error('Realtime read failed:', err);
-      // fallback: try to read once (non-realtime)
-      fetchApprovedOnce();
-    });
-  } catch (e) {
-    console.error('Realtime setup error', e);
-    fetchApprovedOnce();
-  }
-
-  async function fetchApprovedOnce(){
-    try {
-      const q2 = query(collection(db,'vouches'), where('approved','==', true), orderBy('timestamp','desc'));
-      const snap = await getDocs(q2);
-      vouchesEl.innerHTML = '';
-      snap.forEach(doc => {
-        const d = doc.data();
-        const wrap = document.createElement('div');
-        wrap.className = 'vouch';
-        const name = escapeHtml(d.name || d.author || 'Anonymous');
-        const text = escapeHtml(d.message || d.text || '');
-        wrap.innerHTML = `<div class="name">${name}</div><div class="text">${text}</div>`;
-        vouchesEl.appendChild(wrap);
-      });
-    } catch(err) {
-      console.error('Fetch once failed', err);
-    }
-  }
-})();
-
-/* ---------- Cooldown UI ---------- */
-function getRemaining(){
-  const last = Number(localStorage.getItem(LAST_KEY) || 0);
-  const rem = Math.max(0, COOLDOWN_MS - (Date.now() - last));
-  return rem;
-}
+/* helper: humanize ms */
 function msToHuman(ms){
   if(ms<=0) return '0s';
   const h = Math.floor(ms/3600000);
@@ -238,8 +235,15 @@ function msToHuman(ms){
   if(m>0) return `${m}m`;
   return `${Math.floor(ms/1000)}s`;
 }
+
+/* cooldown UI from localStorage */
+function getLocalRemaining(){
+  const last = Number(localStorage.getItem(LAST_KEY) || 0);
+  const rem = Math.max(0, COOLDOWN_MS - (Date.now() - last));
+  return rem;
+}
 function updateCooldownUI(){
-  const rem = getRemaining();
+  const rem = getLocalRemaining();
   if(rem>0){
     cooldownMsg.textContent = `You may submit again in ${msToHuman(rem)}.`;
     submitBtn.disabled = true;
@@ -249,56 +253,114 @@ function updateCooldownUI(){
   }
 }
 updateCooldownUI();
-setInterval(updateCooldownUI, 30000);
+setInterval(updateCooldownUI, 20000);
 
-/* ---------- Submit flow ---------- */
-form.addEventListener('submit', async (e)=>{
+/* ---------- realtime feed (no admin approval required) ---------- */
+(function listenAll(){
+  const q = query(collection(db,'vouches'), orderBy('timestamp','desc'));
+  onSnapshot(q, snap => {
+    vouchesEl.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const card = document.createElement('div');
+      card.className = 'vouch';
+      const name = sanitize(d.name || 'Anonymous');
+      const text = sanitize(d.message || d.text || '');
+      const t = d.timestamp && d.timestamp.toDate ? d.timestamp.toDate() : null;
+      const timeStr = t ? new Date(t).toLocaleString() : '';
+      card.innerHTML = `
+        <div class="top">
+          <div class="name">${name}</div>
+          <div class="time">${timeStr}</div>
+        </div>
+        <div class="body">${text}</div>
+      `;
+      vouchesEl.appendChild(card);
+    });
+  }, err => {
+    console.error('Realtime error', err);
+    // optionally fallback to one-time fetch
+  });
+})();
+
+/* ---------- submit logic ---------- */
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   submitBtn.disabled = true;
 
+  const code = (codeInput.value || '').trim();
   const name = (nameInput.value || '').trim();
   const message = (msgInput.value || '').trim();
 
+  // basic validation
+  if(!code || code.toUpperCase() !== PASSCODE.toUpperCase()){
+    alert('Invalid passcode.');
+    submitBtn.disabled = false;
+    return;
+  }
   if(!name || !message){
     alert('Please fill name and vouch.');
     submitBtn.disabled = false;
     return;
   }
 
-  // Local cooldown check
-  if(getRemaining() > 0){
-    alert(`Please wait ${msToHuman(getRemaining())} before submitting again.`);
+  // local cooldown
+  const localRem = getLocalRemaining();
+  if(localRem > 0){
+    alert(`Please wait ${msToHuman(localRem)} before submitting again.`);
     submitBtn.disabled = false;
     return;
   }
 
+  // server-side cooldown check using clientId
   try {
-    // Add to Firestore as pending
+    const cutoff = Timestamp.fromDate(new Date(Date.now() - COOLDOWN_MS));
+    const q = query(collection(db,'vouches'), where('clientId','==', clientId), where('timestamp','>=', cutoff));
+    const snap = await getDocs(q);
+    if(!snap.empty){
+      // compute remaining from newest doc
+      let newest = 0;
+      snap.forEach(d => {
+        const t = d.data().timestamp;
+        if(t && t.toDate) newest = Math.max(newest, t.toDate().getTime());
+      });
+      const rem = Math.max(0, COOLDOWN_MS - (Date.now() - newest));
+      alert(`You already submitted recently. Please wait ${msToHuman(rem)} before submitting again.`);
+      submitBtn.disabled = false;
+      return;
+    }
+  } catch(err) {
+    console.error('Cooldown check error', err);
+    // allow unless you want to block on error
+  }
+
+  // all good — submit
+  try {
     await addDoc(collection(db,'vouches'), {
       name,
       message,
-      approved: false,
+      clientId,
       timestamp: serverTimestamp()
     });
 
-    // Update local cooldown timestamp
+    // set local cooldown
     localStorage.setItem(LAST_KEY, String(Date.now()));
     updateCooldownUI();
 
-    // show modal popup
+    // show modal
     showModal(true);
 
-    // reset form
+    // clear form
     form.reset();
-  } catch(err) {
+  } catch(err){
     console.error('Submit failed', err);
-    alert('Failed to submit vouch: ' + (err.message || err));
+    alert('Submit failed: ' + (err.message || err));
   } finally {
     submitBtn.disabled = false;
   }
 });
 
-/* ---------- Modal helpers ---------- */
+/* ---------- modal helpers ---------- */
 function showModal(autoHide=true){
   modal.classList.add('show');
   modal.setAttribute('aria-hidden','false');
@@ -306,12 +368,11 @@ function showModal(autoHide=true){
     setTimeout(()=>{ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); }, 3000);
   }
 }
-showVouchesBtn.addEventListener('click', (ev)=>{
-  ev.preventDefault();
-  modal.classList.remove('show');
-  modal.setAttribute('aria-hidden','true');
-  document.querySelector('#vouches')?.scrollIntoView({behavior:'smooth'});
-});
+
+/* utility: sanitize to prevent HTML injection */
+function sanitize(s){
+  return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+}
 
 </script>
 </body>
