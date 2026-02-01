@@ -1,138 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Romanci Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #0f0f0f;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .container {
-    background: #1c1c1c;
-    padding: 2rem;
-    border-radius: 16px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    text-align: center;
-  }
-  h1 {
-    color: #f0c419;
-    margin-bottom: 2rem;
-  }
-  input {
-    width: 100%;
-    padding: 0.8rem;
-    margin: 0.6rem 0;
-    border-radius: 8px;
-    border: none;
-    font-size: 1rem;
-  }
-  button {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg, #f0c419, #f7e07d);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  button:hover {
-    filter: brightness(1.2);
-  }
-  .popup {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,0.8);
-    z-index: 100;
-  }
-  .popup-content {
-    background: #222;
-    padding: 2rem;
-    border-radius: 16px;
-    text-align: center;
-    animation: pop 0.5s ease;
-  }
-  .popup-content h2 {
-    color: #f0c419;
-    margin-bottom: 1rem;
-  }
-  @keyframes pop {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROMANCI Admin</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111, #222);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #login, #admin-panel {
+      background: rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255,215,0,0.4);
+      width: 300px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(90deg,#fdd835,#fbc02d);
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+    #admin-panel { display: none; }
+    h2 { color: #fbc02d; }
+    table { width: 100%; margin-top: 10px; border-collapse: collapse; }
+    th, td { padding: 6px; border: 1px solid #555; text-align: left; }
+    th { background: #333; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>ROMANCI ADMIN</h1>
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <button id="loginBtn">Login</button>
+<div id="login">
+  <h2>ROMANCI Admin Login</h2>
+  <button id="loginBtn">Login with Google</button>
 </div>
 
-<div class="popup" id="popup">
-  <div class="popup-content">
-    <h2>✅ Thank You!</h2>
-    <p>You are now logged in.</p>
-    <div style="font-size: 2rem; color: #f0c419;">R</div>
-  </div>
+<div id="admin-panel">
+  <h2>Admin Panel</h2>
+  <p>Welcome, <span id="userName"></span></p>
+  <button id="logoutBtn">Logout</button>
+
+  <h3>Vouches</h3>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Message</th><th>Approved</th><th>Timestamp</th></tr>
+    </thead>
+    <tbody id="vouchList"></tbody>
+  </table>
 </div>
 
-<!-- Firebase SDK -->
-<script type="module">
-  // Import Firebase modules
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+<script>
+  // --- FIREBASE CONFIG ---
+ const firebaseConfig = {
+   apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
+   authDomain: "romanci-vouch.firebaseapp.com",
+   projectId: "romanci-vouch",
+   storageBucket: "romanci-vouch.firebasestorage.app",
+   messagingSenderId: "154787033593",
+   appId: "1:154787033593:web:0855c02f6c1d7204ed8d28",
+   measurementId: "G-7QWKQ6ZXX3"
+ };
 
-  const firebaseConfig = {
-  apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
-  authDomain: "romanci-vouch.firebaseapp.com",
-  projectId: "romanci-vouch",
-  storageBucket: "romanci-vouch.firebasestorage.app",
-  messagingSenderId: "154787033593",
-  appId: "1:154787033593:web:0855c02f6c1d7204ed8d28",
-  measurementId: "G-7QWKQ6ZXX3"
-};
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
+  // --- DOM ELEMENTS ---
+  const loginDiv = document.getElementById("login");
+  const adminDiv = document.getElementById("admin-panel");
   const loginBtn = document.getElementById("loginBtn");
-  const popup = document.getElementById("popup");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userNameSpan = document.getElementById("userName");
+  const vouchList = document.getElementById("vouchList");
 
+  // --- LOGIN ---
   loginBtn.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  });
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Show popup
-        popup.style.display = "flex";
+  // --- LOGOUT ---
+  logoutBtn.addEventListener("click", () => {
+    auth.signOut();
+  });
 
-        // Redirect after 2 seconds
-        setTimeout(() => {
-          window.location.href = "admin-panel.html"; // <-- Your real admin page
-        }, 2000);
-      })
-      .catch((error) => {
-        alert(error.message);
+  // --- AUTH STATE ---
+  auth.onAuthStateChanged(user => {
+    if(user){
+      loginDiv.style.display = "none";
+      adminDiv.style.display = "block";
+      userNameSpan.textContent = user.displayName;
+
+      // Load vouches
+      db.collection("vouches").orderBy("timestamp","desc").onSnapshot(snapshot => {
+        vouchList.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          vouchList.innerHTML += `
+            <tr>
+              <td>${data.name}</td>
+              <td>${data.message}</td>
+              <td>${data.approved}</td>
+              <td>${data.timestamp?.toDate().toLocaleString() || "-"}</td>
+            </tr>
+          `;
+        });
       });
+
+    } else {
+      loginDiv.style.display = "block";
+      adminDiv.style.display = "none";
+    }
   });
 </script>
 
