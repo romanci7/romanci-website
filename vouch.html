@@ -3,180 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vouch Page</title>
+<title>Romanci Vouch</title>
+
 <style>
-  /* Google Fonts Import */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap');
 
-  :root {
-    --primary-color: #4f46e5;
-    --bg-color: #f3f4f6;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --shadow: rgba(0,0,0,0.1);
+:root {
+  --gold: #c9a24d;
+  --dark-gold: #a8842c;
+  --cream: #f9f6ef;
+  --bg: #fffaf0;
+  --card: rgba(255,255,255,0.9);
+  --shadow: rgba(0,0,0,0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #fff8e6, #f3ead7);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- HEADER ---------- */
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeUp 1s ease;
+}
+
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+.header span {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* ---------- FORM ---------- */
+
+.vouch-form {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 35px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 20px 40px var(--shadow);
+  border: 1px solid rgba(201,162,77,0.25);
+  animation: fadeUp 1.3s ease;
+}
+
+.vouch-form h2 {
+  text-align: center;
+  color: var(--dark-gold);
+  margin-bottom: 25px;
+  font-family: 'Playfair Display', serif;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 18px;
+  font-size: 1rem;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,162,77,0.15);
+}
+
+textarea {
+  resize: none;
+  min-height: 110px;
+}
+
+/* ---------- BUTTON ---------- */
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(201,162,77,0.35);
+}
+
+/* ---------- VOUCH LIST ---------- */
+
+.vouches {
+  max-width: 900px;
+  width: 100%;
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  animation: fadeUp 1.6s ease;
+}
+
+.vouch-card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(201,162,77,0.25);
+  box-shadow: 0 12px 25px var(--shadow);
+  transition: 0.3s ease;
+}
+
+.vouch-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px var(--shadow);
+}
+
+.vouch-name {
+  font-weight: 600;
+  color: var(--dark-gold);
+  margin-bottom: 10px;
+}
+
+.vouch-text {
+  line-height: 1.6;
+  color: #444;
+}
+
+/* ---------- ANIMATIONS ---------- */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
   }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  body {
-    background-color: var(--bg-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px 20px;
-    min-height: 100vh;
-    transition: background 0.3s ease;
+/* ---------- MOBILE ---------- */
+
+@media(max-width:600px) {
+  .header h1 {
+    font-size: 2.3rem;
   }
-
-  h1 {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    text-align: center;
-    animation: fadeIn 1s ease forwards;
-  }
-
-  p {
-    text-align: center;
-    color: #333;
-    margin-bottom: 40px;
-    max-width: 600px;
-    animation: fadeIn 1.5s ease forwards;
-  }
-
-  form {
-    background: var(--card-bg);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px var(--shadow);
-    width: 100%;
-    max-width: 500px;
-    animation: fadeIn 2s ease forwards;
-  }
-
-  input, textarea, button {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    transition: 0.3s ease;
-  }
-
-  input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(79,70,229,0.2);
-  }
-
-  textarea {
-    resize: none;
-    min-height: 100px;
-  }
-
-  button {
-    background: var(--primary-color);
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease;
-  }
-
-  button:hover {
-    background: #3730a3;
-  }
-
-  .vouches {
-    margin-top: 50px;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  .vouch-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px var(--shadow);
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .vouch-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px var(--shadow);
-  }
-
-  .vouch-name {
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-  }
-
-  .vouch-message {
-    color: #333;
-    line-height: 1.5;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    body {
-      padding: 30px 10px;
-    }
-
-    h1 {
-      font-size: 2rem;
-    }
-
-    form {
-      padding: 20px;
-    }
-  }
+}
 </style>
 </head>
+
 <body>
 
-<h1>Vouch for Us</h1>
-<p>Share your feedback or vouch for our website. Your words mean a lot and help our community grow!</p>
-
-<form id="vouchForm">
-  <input type="text" id="name" placeholder="Your Name" required>
-  <textarea id="message" placeholder="Your Vouch / Feedback" required></textarea>
-  <button type="submit">Submit Vouch</button>
-</form>
-
-<div class="vouches" id="vouchesList">
-  <!-- Submitted vouches will appear here -->
+<div class="header">
+  <h1>ROMANCI VOUCH</h1>
+  <span>Trusted by our community • Premium experiences</span>
 </div>
 
+<div class="vouch-form">
+  <h2>Leave Your Vouch</h2>
+  <form id="form">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <textarea id="text" placeholder="Write your vouch here..." required></textarea>
+    <button type="submit">Submit Vouch</button>
+  </form>
+</div>
+
+<div class="vouches" id="vouches"></div>
+
 <script>
-  const form = document.getElementById('vouchForm');
-  const vouchesList = document.getElementById('vouchesList');
+const form = document.getElementById("form");
+const list = document.getElementById("vouches");
 
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const message = document.getElementById('message').value.trim();
+/* Default starter vouches */
+const starter = [
+  {name:"Ayaan", text:"Romanci service is top-tier. Clean design and smooth experience."},
+  {name:"Zara", text:"Luxury feel and fast delivery. Highly recommended."},
+  {name:"Ibrahim", text:"The gold theme really matches the premium brand vibe."}
+];
 
-    if(name && message) {
-      const card = document.createElement('div');
-      card.classList.add('vouch-card');
-      card.innerHTML = `<div class="vouch-name">${name}</div><div class="vouch-message">${message}</div>`;
-      vouchesList.prepend(card);
+let data = JSON.parse(localStorage.getItem("romanci_vouches")) || starter;
 
-      form.reset();
-    }
+function render() {
+  list.innerHTML = "";
+  data.forEach(v => {
+    const card = document.createElement("div");
+    card.className = "vouch-card";
+    card.innerHTML = `
+      <div class="vouch-name">${v.name}</div>
+      <div class="vouch-text">${v.text}</div>
+    `;
+    list.prepend(card);
   });
+}
+
+render();
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const text = document.getElementById("text").value.trim();
+
+  if(!name || !text) return;
+
+  data.push({name, text});
+  localStorage.setItem("romanci_vouches", JSON.stringify(data));
+  render();
+  form.reset();
+});
 </script>
 
 </body>
