@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Romanci — Terms of Use & Terms of Service</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#fbf8f4;
+    --panel:#f6efe9;
+    --card:#fff;
+    --accent:#2f201c;
+    --muted:#7f6f67;
+    --glass: rgba(255,255,255,0.6);
+    --radius:14px;
+    --shadow: 0 24px 80px rgba(36,26,24,0.06);
+    --ease: cubic-bezier(.2,.9,.25,1);
+  }
+
+  /* Textured background + subtle radial highlights for premium feel */
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+    background:
+      radial-gradient(900px 500px at 8% 12%, rgba(255,250,245,0.6), transparent 8%),
+      radial-gradient(700px 350px at 92% 88%, rgba(245,240,235,0.6), transparent 6%),
+      var(--bg);
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
+  }
+
+  .wrap{max-width:1200px;margin:28px auto;padding:20px}
+
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .brand{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:3px}
+  nav a{margin-left:14px;color:var(--muted);text-decoration:none;font-weight:600}
+  nav a:hover{color:var(--accent)}
+
+  main.card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.98));
+    border-radius:16px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(36,26,24,0.03);
+  }
+
+  .hero{
+    display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px;
+  }
+  .hero .title{font-family:'Playfair Display',serif;font-size:28px;margin:0}
+  .hero .desc{color:var(--muted);max-width:760px}
+
+  .toc{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+  .toc a{background:var(--panel);padding:8px 12px;border-radius:999px;color:var(--accent);text-decoration:none;font-weight:600;border:1px solid rgba(36,26,24,0.03);transition:all .18s var(--ease)}
+  .toc a:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(36,26,24,0.04)}
+
+  /* section + accordion */
+  .section{margin:18px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,var(--card),#fff);border:1px solid rgba(36,26,24,0.03)}
+  .section h3{font-family:'Playfair Display',serif;margin:0 0 8px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:12px}
+
+  .accordion{border-top:1px solid rgba(36,26,24,0.03)}
+  .acc-item{border-bottom:1px solid rgba(36,26,24,0.03)}
+  .acc-q{display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer}
+  .acc-q h4{margin:0;font-size:16px}
+  .acc-q .tag{font-size:13px;color:var(--muted)}
+  .acc-a{max-height:0;overflow:hidden;padding:0 0;transition:max-height .34s var(--ease),padding .34s var(--ease)}
+  .acc-item.open .acc-a{padding:12px 0 18px;max-height:999px}
+
+  /* acceptance area */
+  .agree-box{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--panel);margin-top:12px}
+  .agree-box input[type="checkbox"]{width:18px;height:18px}
+
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;background:var(--accent);color:#fff}
+  .btn.ghost{background:transparent;border:1px solid rgba(36,26,24,0.06);color:var(--accent)}
+  .btn.alt{background:#6b6b6b}
+
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:14px}
+  .box{background:var(--panel);padding:14px;border-radius:12px;border:1px solid rgba(36,26,24,0.03)}
+
+  footer{margin-top:22px;padding-top:18px;border-top:1px solid rgba(36,26,24,0.03);color:var(--muted);font-size:14px;text-align:center}
+
+  /* small utility */
+  .muted{color:var(--muted)}
+  code{background:#fff;padding:2px 6px;border-radius:6px;border:1px solid rgba(36,26,24,0.03)}
+
+  /* responsive */
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr}
+    .hero{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand">ROMANCI</div>
+      <div class="muted" style="font-size:13px;margin-top:4px">Terms of Use & Terms of Service</div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="offers.html">Services</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="card" role="main" aria-labelledby="termsTitle">
+    <div class="hero">
+      <div>
+        <h1 id="termsTitle" class="title">Terms of Use — Romanci</h1>
+        <div class="meta muted">Last updated: <strong>Feb 1, 2026</strong></div>
+        <p class="desc">Please read these Terms of Use carefully. They explain rules for using this website and the services Romanci provides. For enterprise clients we provide a formal service agreement tailored to the engagement.</p>
+      </div>
+
+      <div style="text-align:right">
+        <div class="muted">Contact</div>
+        <div style="font-weight:700;margin-top:6px">WhatsApp: <a href="https://wa.me/917736574585?text=Hello%20Romanci" target="_blank">+91 77365 74585</a></div>
+        <div style="margin-top:6px">Instagram: <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a></div>
+      </div>
+    </div>
+
+    <div class="toc" aria-hidden="false">
+      <a href="#agreement">Agreement</a>
+      <a href="#services">Services</a>
+      <a href="#payments">Payments</a>
+      <a href="#refunds">Refunds</a>
+      <a href="#ip">Intellectual Property</a>
+      <a href="#liability">Liability</a>
+      <a href="#termination">Termination</a>
+      <a href="#law">Governing Law</a>
+    </div>
+
+    <div class="grid" role="region">
+      <!-- LEFT: Terms sections -->
+      <div>
+        <section id="agreement" class="section" aria-labelledby="agreementTitle">
+          <h3 id="agreementTitle">1. Agreement & Acceptance</h3>
+          <p class="meta muted">By accessing or using this site or our services, you accept these Terms.</p>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Scope</h4><div class="tag muted">what's covered</div></div>
+              <div class="acc-a">
+                <p>These Terms govern your use of the Romanci website (the "Site") and any services ordered or provided via the Site, including account recovery assistance, verification support, Discord development, and website work. Separate statements of work or service agreements may add additional terms for paid engagements.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Eligibility</h4><div class="tag muted">who can use</div></div>
+              <div class="acc-a">
+                <p>You represent that you have the authority to enter into these Terms and are at least 16 years old (or older if local law requires). If you are agreeing on behalf of a company or organization, you confirm you have authority to bind that entity.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" class="section" aria-labelledby="servicesTitle">
+          <h3 id="servicesTitle">2. Services</h3>
+          <div class="meta muted">Summary: we deliver services according to agreed scope and platform rules.</div>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Service Scope & Delivery</h4><div class="tag muted">deliverables</div></div>
+              <div class="acc-a">
+                <p>Services are described in the Site and in individual proposals. Timelines and deliverables depend on complexity and platform response times. Romanci follows platform policies and lawful methods for recovery or verification; we will not assist in prohibited or illegal activity.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Client obligations</h4><div class="tag muted">what you must provide</div></div>
+              <div class="acc-a">
+                <p>The client must provide accurate information, necessary access or proof of ownership, and timely responses. Failure to provide required information may delay or void the agreed timeline.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Third-party platforms</h4><div class="tag muted">platform decisions</div></div>
+              <div class="acc-a">
+                <p>Many services require action or approval by third-party platforms (Instagram, Facebook, X, YouTube, Discord, etc.). Romanci may prepare and submit appeals or applications, but platform final decisions are outside our control.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="payments" class="section" aria-labelledby="paymentsTitle">
+          <h3 id="paymentsTitle">3. Payments & Fees</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Pricing & Quotes</h4><div class="tag muted">how pricing works</div></div>
+              <div class="acc-a">
+                <p>Pricing is set per service or by written quote. Quotes are valid for the period specified in the proposal. For custom work, an upfront deposit may be required before work begins.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Payment Terms</h4><div class="tag muted">due dates</div></div>
+              <div class="acc-a">
+                <p>Unless otherwise agreed, payments are due as stated in the invoice. Late payments may incur fees or suspend services until the account is current.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="refunds" class="section" aria-labelledby="refundsTitle">
+          <h3 id="refundsTitle">4. Refunds & Cancellations</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Refund policy (summary)</h4><div class="tag muted">refunds</div></div>
+              <div class="acc-a">
+                <p>Refunds may be available within 7 days for prepaid work that has not commenced, subject to the terms of any proposal. Custom work or work already performed is generally non-refundable. For purchases through third-party providers, their refund policy may apply.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Cancellation</h4><div class="tag muted">how to cancel</div></div>
+              <div class="acc-a">
+                <p>To cancel planned work, contact Romanci via the Site or WhatsApp. Cancellation terms, including fees, will depend on the stage of work and any non-recoverable costs.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="ip" class="section" aria-labelledby="ipTitle">
+          <h3 id="ipTitle">5. Intellectual Property</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Ownership</h4><div class="tag muted">who owns what</div></div>
+              <div class="acc-a">
+                <p>Unless otherwise agreed, Romanci retains ownership of pre-existing tools, templates, and systems. Delivered custom work is transferred to the client after full payment unless a license or retention is specified in the agreement.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Client content</h4><div class="tag muted">your materials</div></div>
+              <div class="acc-a">
+                <p>The client represents they own rights to any content provided for use in the project or have necessary licenses. The client grants Romanci a limited license to use such content for delivery of services.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="liability" class="section" aria-labelledby="liabilityTitle">
+          <h3 id="liabilityTitle">6. Warranties & Liability</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Disclaimer of warranties</h4><div class="tag muted">no guarantees</div></div>
+              <div class="acc-a">
+                <p>Services are provided "as is" to the extent permitted by law. Romanci disclaims all warranties not expressly stated in a signed agreement.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Limitation of liability</h4><div class="tag muted">caps</div></div>
+              <div class="acc-a">
+                <p>Except where prohibited by law, Romanci's total liability for claims related to services is limited to the amount paid by the client for the specific services giving rise to the claim. We are not liable for indirect, incidental, or consequential damages.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="termination" class="section" aria-labelledby="terminationTitle">
+          <h3 id="terminationTitle">7. Termination & Suspension</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Termination for breach</h4><div class="tag muted">breach</div></div>
+              <div class="acc-a">
+                <p>Romanci may suspend or terminate services for material breach of these Terms, unlawful use, or non-payment. Termination does not relieve client of payment obligations for services already performed.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Effects of termination</h4><div class="tag muted">post-termination</div></div>
+              <div class="acc-a">
+                <p>On termination, the client must stop using Romanci materials and settle outstanding fees. Any return of materials or handover will be performed as agreed in the statement of work, subject to payment receipt.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="law" class="section" aria-labelledby="lawTitle">
+          <h3 id="lawTitle">8. Governing Law & Disputes</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Governing law</h4><div class="tag muted">jurisdiction</div></div>
+              <div class="acc-a">
+                <p>These Terms are governed by the laws of the jurisdiction agreed in the service agreement. For the demo site, by using the site you accept the laws where Romanci operates (India). Disputes will be resolved through good-faith negotiation, and where necessary, through local courts or arbitration as agreed.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Contact for disputes</h4><div class="tag muted">reach us</div></div>
+              <div class="acc-a">
+                <p>To raise concerns or disputes, contact us via WhatsApp at +91 77365 74585 or Instagram @1hdzl. We aim to respond and resolve matters promptly.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Accept terms -->
+        <div style="margin-top:18px">
+          <div class="agree-box" role="group" aria-labelledby="agreeLabel">
+            <input id="agreeCheck" type="checkbox" aria-label="I agree to the terms">
+            <div>
+              <div id="agreeLabel" style="font-weight:700">I have read and accept the Terms of Use</div>
+              <div class="muted" style="font-size:13px">Selecting this indicates consent for demo purposes (stored locally).</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="tools">
+            <button id="acceptBtn" class="btn">Accept & Save</button>
+            <button id="downloadBtn" class="btn ghost">Download Terms</button>
+            <button id="printBtn" class="btn alt">Print</button>
+          </div>
+
+          <div id="agreeMsg" class="muted" style="margin-top:10px;display:none">Thanks — your acceptance has been saved locally.</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: quick tools and summary -->
+      <aside>
+        <div class="box" role="region" aria-label="Quick summary">
+          <strong>Quick Summary</strong>
+          <p class="muted" style="margin-top:8px">Key points at a glance:</p>
+          <ul style="margin-top:10px">
+            <li class="muted">You agree to follow platform rules and provide accurate info.</li>
+            <li class="muted" style="margin-top:6px">Refunds limited; custom work typically non-refundable after start.</li>
+            <li class="muted" style="margin-top:6px">Romanci limits liability to the fees paid for the service.</li>
+          </ul>
+        </div>
+
+        <div class="box" style="margin-top:12px" role="region" aria-label="Contact">
+          <strong>Contact & Help</strong>
+          <p class="muted" style="margin-top:8px">WhatsApp: <a href="https://wa.me/917736574585?text=Terms%20question" target="_blank">+91 77365 74585</a></p>
+          <p class="muted" style="margin-top:6px">Instagram: <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a></p>
+        </div>
+
+        <div class="box" style="margin-top:12px" role="region" aria-label="Version">
+          <strong>Version</strong>
+          <div class="muted" style="margin-top:8px">v1.0 — Last updated: Feb 1, 2026</div>
+        </div>
+      </aside>
+    </div>
+
+    <div style="margin-top:18px" class="muted small">This document is a general terms-of-use template for the Romanci demo site. It is intended for clarity and testing. For legal or enterprise use please obtain a formal contract and legal review.</div>
+  </main>
+
+  <footer>
+    © <strong>ROMANCI</strong> — WhatsApp: <a href="https://wa.me/917736574585?text=Hello%20Romanci" target="_blank">+91 77365 74585</a> · Instagram <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a>
+  </footer>
+</div>
+
+<!-- Inline JS: accordion, download, print, accept -->
+<script>
+(function(){
+  // Accordion open/close
+  const accQs = document.querySelectorAll('.acc-q');
+  accQs.forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('open');
+      // close others for tidy UX
+      document.querySelectorAll('.acc-item').forEach(i => { if(i !== item) i.classList.remove('open'); });
+    });
+    q.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); } });
+  });
+
+  // Smooth TOC scrolling
+  document.querySelectorAll('.toc a').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const href = a.getAttribute('href');
+      if(!href || href.charAt(0) !== '#') return;
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // Accept / Save to localStorage
+  const agreeCheck = document.getElementById('agreeCheck');
+  const acceptBtn = document.getElementById('acceptBtn');
+  const agreeMsg = document.getElementById('agreeMsg');
+  const STORAGE_KEY = 'romanci_terms_accepted';
+
+  function setAccepted(){
+    const payload = { acceptedAt: new Date().toISOString() };
+    localStorage.setItem(STO

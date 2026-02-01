@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Romanci — Services</title>
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  body { background: #fdfaf6; color: #241b18; font-family: Inter, sans-serif; }
+  header, nav { display:flex; justify-content:space-between; align-items:center; padding:16px; background:rgba(255,255,255,0.96); backdrop-filter:blur(8px); border-bottom:1px solid rgba(36,26,24,0.05); }
+  nav a { margin-left:16px; text-decoration:none; color:#85756f; font-weight:600; }
+  nav a:hover { color:#241b18; }
+  main { max-width:1200px; margin:32px auto; padding:0 16px; }
+  .search-bar { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .search-bar input { flex:1; padding:10px 12px; border-radius:12px; border:1px solid rgba(36,26,24,0.1); }
+  .search-bar button { padding:10px 16px; border-radius:12px; border:none; background:#2f201c; color:#fff; cursor:pointer; }
+  .category-select { margin-left:auto; display:flex; gap:8px; }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .service-card { padding:20px; background:rgba(255,255,255,0.85); border-radius:20px; box-shadow:0 12px 24px rgba(36,26,24,0.05); cursor:pointer; transition:transform 0.2s ease; }
+  .service-card:hover { transform:translateY(-4px); }
+  .service-card h4 { margin:0 0 8px; font-family:'Playfair Display', serif; }
+  .faq { margin:32px 0; padding:16px; border-radius:16px; background:rgba(255,255,255,0.85); }
+  .faq-item { border-bottom:1px solid rgba(36,26,24,0.05); }
+  .faq-q { padding:12px; cursor:pointer; display:flex; justify-content:space-between; font-weight:600; }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; padding:0 12px 12px; color:#85756f; }
+  .faq-item.open .faq-a { max-height:200px; }
+  .popup { position:fixed; inset:0; display:flex; justify-content:center; align-items:center; background:rgba(0,0,0,0.4); visibility:hidden; opacity:0; transition:opacity 0.3s ease; z-index:999; }
+  .popup.active { visibility:visible; opacity:1; }
+  .popup-content { background:#fff; padding:24px 32px; border-radius:20px; font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">ROMANCI</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vouch.html">Vouch</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://instagram.com/1hdzl" target="_blank">Instagram</a>
+    <a href="https://wa.me/917736574585" target="_blank">WhatsApp</a>
+  </nav>
+</header>
+<main>
+  <h1>What We Offer — Extensive Services Catalog</h1>
+  <p>Browse 350+ unique services. Click any service to contact via WhatsApp. A premium redirect popup will appear for 3 seconds.</p>  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search services by keyword, e.g., 'recovery', 'discord', 'seo'">
+    <button onclick="clearSearch()">Clear</button>
+  </div><button onclick="jumpToFAQ()">Jump to Q&A</button>
+
+  <section class="faq" id="faq">
+    <h2>Frequently Asked — 80+ Questions</h2>
+    <div id="faqContainer"></div>
+  </section>  <section class="services-grid" id="servicesContainer"></section>
+</main><div id="popup" class="popup"><div class="popup-content">Redirecting to WhatsApp...</div></div><script src="assets/scripts.js"></script><script>
+// ----- Services -----
+const services = [
+  // YouTube
+  {code:'YT001',category:'YouTube',title:'YouTube Account Recovery',desc:'Recover lost or hacked YouTube accounts.'},
+  {code:'YT002',category:'YouTube',title:'YouTube Channel Monetization Help',desc:'Assist with enabling monetization on your channel.'},
+  {code:'YT003',category:'YouTube',title:'YouTube Video SEO',desc:'Optimize video tags, titles, and descriptions for SEO.'},
+  {code:'YT004',category:'YouTube',title:'YouTube Brand Account Link',desc:'Link YouTube to a brand account correctly.'},
+  {code:'YT005',category:'YouTube',title:'YouTube Copyright Claim Assistance',desc:'Resolve copyright strikes or claims.'},
+  // X (Twitter)
+  {code:'X001',category:'X',title:'X Account Recovery',desc:'Recover your X/Twitter account safely.'},
+  {code:'X002',category:'X',title:'X Verification Guidance',desc:'Help with verification and profile optimization.'},
+  {code:'X003',category:'X',title:'X Analytics Overview',desc:'Provide insights into engagement and reach.'},
+  // Discord
+  {code:'DIS001',category:'Discord',title:'Discord Server Setup',desc:'Create and configure your Discord server.'},
+  {code:'DIS002',category:'Discord',title:'Custom Discord Bot',desc:'Develop bots for moderation and automation.'},
+  {code:'DIS003',category:'Discord',title:'Discord Role Management',desc:'Setup and manage roles and permissions.'},
+  // Website
+  {code:'WEB001',category:'Website',title:'Custom Website Design',desc:'Design responsive websites for brands and creators.'},
+  {code:'WEB002',category:'Website',title:'Website SEO Optimization',desc:'Boost website traffic with SEO strategies.'},
+  {code:'WEB003',category:'Website',title:'Hosting Setup',desc:'Configure web hosting and domain setup.'},
+  // Instagram
+  {code:'IG001',category:'Instagram',title:'Instagram Account Recovery',desc:'Recover lost or hacked Instagram accounts.'},
+  {code:'IG002',category:'Instagram',title:'Instagram Growth Tips',desc:'Advice on growing followers organically.'},
+  {code:'IG003',category:'Instagram',title:'Instagram Analytics',desc:'Analyze engagement metrics and insights.'},
+  // Facebook
+  {code:'FB001',category:'Facebook',title:'Facebook Page Recovery',desc:'Recover lost or compromised Facebook pages.'},
+  {code:'FB002',category:'Facebook',title:'Facebook Ad Assistance',desc:'Help with ad setup and targeting.'},
+  {code:'FB003',category:'Facebook',title:'Facebook Group Setup',desc:'Create and manage Facebook groups.'},
+  // WhatsApp
+  {code:'WA001',category:'WhatsApp',title:'WhatsApp Business Setup',desc:'Setup WhatsApp Business account with automation.'},
+  {code:'WA002',category:'WhatsApp',title:'WhatsApp API Integration',desc:'Integrate WhatsApp API with tools and apps.'},
+  {code:'WA003',category:'WhatsApp',title:'WhatsApp Recovery',desc:'Recover lost WhatsApp chats and data.'},
+  // SEO
+  {code:'SEO001',category:'SEO',title:'Website SEO Audit',desc:'Full SEO analysis for your website.'},
+  {code:'SEO002',category:'SEO',title:'Keyword Research',desc:'Find high-performing keywords.'},
+  {code:'SEO003',category:'SEO',title:'Backlink Strategy',desc:'Build quality backlinks to boost rankings.'}
+];
+
+const servicesContainer = document.getElementById('servicesContainer');
+services.forEach(s => {
+  const div = document.createElement('div');
+  div.className = 'service-card';
+  div.innerHTML = `<h4>${s.title}</h4><p>${s.desc}</p>`;
+  div.onclick = () => {
+    document.getElementById('popup').classList.add('active');
+    setTimeout(() => {
+      document.getElementById('popup').classList.remove('active');
+      window.open(`https://wa.me/917736574585?text=Hi%20I%20need%20the%20service%20No%20${s.code}`, '_blank');
+    }, 3000);
+  };
+  servicesContainer.appendChild(div);
+});
+
+// ----- FAQ -----
+const faqs = [
+  {q:'How do I recover a YouTube account?', a:'Use our YouTube Account Recovery service with your account details.'},
+  {q:'Can I automate my Discord server?', a:'Yes, we create custom bots for moderation and automation.'},
+  {q:'How long does website SEO take?', a:'It usually takes 2-6 weeks depending on the site size.'},
+  {q:'Can you recover Instagram accounts?', a:'Yes, we recover hacked or lost accounts safely.'},
+  {q:'Do you provide WhatsApp Business integration?', a:'Yes, we set up and integrate WhatsApp Business API.'},
+  {q:'How many services can I request?', a:'You can request as many services as needed.'},
+  {q:'Can you help with SEO backlinks?', a:'Yes, we provide strategies and backlink building.'},
+  {q:'Do you assist with Facebook page recovery?', a:'Yes, compromised Facebook pages can be restored.'},
+  {q:'Is there a time limit for service delivery?', a:'Delivery depends on the service type and complexity.'},
+  {q:'How do I contact support?', a:'Use our Contact page or WhatsApp link for inquiries.'}
+];
+const faqContainer = document.getElementById('faqContainer');
+faqs.forEach(f => {
+  const div = document.createElement('div');
+  div.className = 'faq-item';
+  div.innerHTML = `<div class='faq-q'>${f.q}<span>+</span></div><div class='faq-a'>${f.a}</div>`;
+  div.querySelector('.faq-q').onclick = () => div.classList.toggle('open');
+  faqContainer.appendChild(div);
+});
+
+function jumpToFAQ(){ window.scrollTo({top:document.getElementById('faq').offsetTop - 20, behavior:'smooth'}); }
+function clearSearch(){ document.getElementById('searchInput').value=''; filterServices(); }
+function filterServices(){ const term = document.getElementById('searchInput').value.toLowerCase(); servicesContainer.childNodes.forEach(c => { c.style.display = c.textContent.toLowerCase().includes(term)?'block':'none'; }); }
+document.getElementById('searchInput').addEventListener('input', filterServices);
+</script></body>
+</html>

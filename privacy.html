@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Romanci — Privacy Policy</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#fbf8f4;
+    --panel:#f6efe9;
+    --card:#fff;
+    --accent:#2f201c;
+    --muted:#7f6f67;
+    --glass: rgba(255,255,255,0.6);
+    --radius:14px;
+    --shadow: 0 24px 80px rgba(36,26,24,0.06);
+    --ease: cubic-bezier(.2,.9,.25,1);
+  }
+
+  /* subtle textured background using radial-gradient + noise-like overlay */
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(255,250,245,0.6), transparent 10%),
+      radial-gradient(800px 400px at 90% 90%, rgba(245,240,235,0.6), transparent 8%),
+      var(--bg);
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
+  }
+
+  .wrap{max-width:1200px;margin:28px auto;padding:20px}
+
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .brand{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:3px}
+  nav a{margin-left:14px;color:var(--muted);text-decoration:none;font-weight:600}
+  nav a:hover{color:var(--accent)}
+
+  main.card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+    border-radius:16px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(36,26,24,0.03);
+  }
+
+  .hero{
+    display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px;
+  }
+  .hero .title{font-family:'Playfair Display',serif;font-size:28px;margin:0}
+  .hero .desc{color:var(--muted);max-width:760px}
+
+  .toc{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+  .toc a{background:var(--panel);padding:8px 12px;border-radius:999px;color:var(--accent);text-decoration:none;font-weight:600;border:1px solid rgba(36,26,24,0.03);transition:all .18s var(--ease)}
+  .toc a:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(36,26,24,0.04)}
+
+  /* accordion / section */
+  .section{margin:18px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,var(--card),#fff);border:1px solid rgba(36,26,24,0.03)}
+  .section h3{font-family:'Playfair Display',serif;margin:0 0 8px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:12px}
+
+  .accordion{border-top:1px solid rgba(36,26,24,0.03)}
+  .acc-item{border-bottom:1px solid rgba(36,26,24,0.03)}
+  .acc-q{display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer}
+  .acc-q h4{margin:0;font-size:16px}
+  .acc-q .tag{font-size:13px;color:var(--muted)}
+  .acc-a{max-height:0;overflow:hidden;padding:0 0;transition:max-height .34s var(--ease),padding .34s var(--ease)}
+  .acc-item.open .acc-a{padding:12px 0 18px;max-height:999px}
+
+  /* data-tools (export/delete) */
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;background:var(--accent);color:#fff}
+  .btn.ghost{background:transparent;border:1px solid rgba(36,26,24,0.06);color:var(--accent)}
+  .btn.warn{background:#a83b3b}
+
+  /* small boxes */
+  .muted{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:14px}
+  .box{background:var(--panel);padding:14px;border-radius:12px;border:1px solid rgba(36,26,24,0.03)}
+
+  footer{margin-top:22px;padding-top:18px;border-top:1px solid rgba(36,26,24,0.03);color:var(--muted);font-size:14px;text-align:center}
+
+  /* responsive */
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr}
+    .hero{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand">ROMANCI</div>
+      <div class="muted" style="font-size:13px;margin-top:4px">Privacy & Data Handling</div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="offers.html">Services</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="card" role="main" aria-labelledby="policyTitle">
+    <div class="hero">
+      <div>
+        <h1 id="policyTitle" class="title">Privacy Policy — Romanci</h1>
+        <div class="meta muted">Last updated: <strong>Feb 1, 2026</strong> · Effective: Immediately</div>
+        <p class="desc">This page explains what data Romanci collects, how we use it, what choices you have, and how to request access, export or deletion. It also includes handy tools (export/delete demo data) for the local demo site.</p>
+      </div>
+
+      <div style="text-align:right">
+        <div class="muted">Contact</div>
+        <div style="font-weight:700;margin-top:6px">WhatsApp: <a href="https://wa.me/917736574585?text=Hello%20Romanci" target="_blank">+91 77365 74585</a></div>
+        <div style="margin-top:6px">Instagram: <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a></div>
+      </div>
+    </div>
+
+    <div class="toc" aria-hidden="false">
+      <a href="#summary">Summary</a>
+      <a href="#what">What we collect</a>
+      <a href="#use">How we use data</a>
+      <a href="#share">Sharing</a>
+      <a href="#cookies">Cookies</a>
+      <a href="#rights">Your rights</a>
+      <a href="#tools">Data tools</a>
+    </div>
+
+    <!-- GRID: content + tools -->
+    <div class="grid" role="region">
+      <!-- LEFT: main sections -->
+      <div>
+
+        <section id="summary" class="section" aria-labelledby="sum">
+          <h3 id="sum">Summary</h3>
+          <p class="meta muted">Short version: we collect minimal data needed to deliver services. On this demo site some data is stored locally (in your browser).</p>
+          <div class="accordion" role="list">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Why this policy exists</h4>
+                <div class="tag muted">overview</div>
+              </div>
+              <div class="acc-a">
+                <p>Romanci values your privacy. This policy explains the types of information we collect, how we use it, and the choices available to you. It covers website visitors, clients, and contributors.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Scope</h4>
+                <div class="tag muted">who & what</div>
+              </div>
+              <div class="acc-a">
+                <p>This policy applies to information collected on our website, via forms (contact, vouch, quote), and during service delivery. It does not govern third-party sites; see the “Sharing & Third-parties” section below.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="what" class="section" aria-labelledby="whatTitle">
+          <h3 id="whatTitle">What information we collect</h3>
+          <p class="meta muted">We collect information you provide directly, automatically-generated technical data, and (where applicable) third-party data.</p>
+
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Information you provide</h4>
+                <div class="tag muted">forms, messages</div>
+              </div>
+              <div class="acc-a">
+                <p>Examples: your name, email, phone number, project details, vouches/testimonials, and attachments you upload. For account recovery we may request historical account details to prove ownership (never share passwords via insecure channels).</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Automatically collected data</h4>
+                <div class="tag muted">logs & analytics</div>
+              </div>
+              <div class="acc-a">
+                <p>When you visit the site we may record request logs (IP address, browser type, timestamps), basic analytics (pages visited, referrer) to improve reliability. On the demo site these logs are transient and primarily browser-side or server logs from your local server.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Third-party data</h4>
+                <div class="tag muted">integrations</div>
+              </div>
+              <div class="acc-a">
+                <p>When you choose third-party services (payment processors, hosting, analytics), those providers may collect data. We recommend checking their privacy policies. We don’t sell your personal data.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="use" class="section" aria-labelledby="useTitle">
+          <h3 id="useTitle">How we use your data</h3>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Deliver services</h4>
+                <div class="tag muted">primary purpose</div>
+              </div>
+              <div class="acc-a">
+                <p>We use collected information to provide services: account recovery, Discord setup, website development, and customer support. This includes contacting you, preparing appeals, and implementing site changes.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Analytics & improvements</h4>
+                <div class="tag muted">improve</div>
+              </div>
+              <div class="acc-a">
+                <p>We may analyse usage patterns to improve the website, user flows, and reliability. On the demo site analytics are minimal and often simulated for testing.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0">
+                <h4>Legal & safety</h4>
+                <div class="tag muted">compliance</div>
+              </div>
+              <div class="acc-a">
+                <p>We may retain and process data to comply with legal obligations, address abuse, or protect the rights and safety of others.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="share" class="section" aria-labelledby="shareTitle">
+          <h3 id="shareTitle">Sharing & Third Parties</h3>
+          <p class="meta muted">We do not sell personal data. Limited sharing occurs with trusted service providers only when necessary to deliver a service.</p>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Service providers</h4><div class="tag muted">examples</div></div>
+              <div class="acc-a"><p>Examples: hosting providers, payment processors, analytics vendors, and collaboration tools. We require these providers to follow appropriate security measures.</p></div>
+            </div>
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Legal requests</h4><div class="tag muted">law enforcement</div></div>
+              <div class="acc-a"><p>Where required by law or to protect rights, we may disclose information to comply with legal processes (e.g., court orders) or to defend against claims.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="cookies" class="section" aria-labelledby="cookiesTitle">
+          <h3 id="cookiesTitle">Cookies & Tracking</h3>
+          <p class="meta muted">Cookies help keep sessions, preferences, and analytics. You can manage or block cookies in your browser.</p>
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Types of cookies</h4><div class="tag muted">necessary, analytics</div></div>
+              <div class="acc-a"><p>We may use essential cookies for site function and optional cookies for analytics. On this demo site analytics are optional and lightweight.</p></div>
+            </div>
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Control</h4><div class="tag muted">your choice</div></div>
+              <div class="acc-a"><p>To change cookie preferences use your browser settings or privacy tools. Blocking cookies may affect site functionality.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="rights" class="section" aria-labelledby="rightsTitle">
+          <h3 id="rightsTitle">Your rights & choices</h3>
+          <p class="meta muted">You have rights to access, correct, export, and request deletion of your personal data. Below are practical options for this demo site.</p>
+
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Request access / export</h4><div class="tag muted">download</div></div>
+              <div class="acc-a">
+                <p>You can export your data (vouches, contact messages, quotes) using the Data Tools on the right. For production services we'll provide a formal request channel via email or dashboard.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>Request deletion</h4><div class="tag muted">erase</div></div>
+              <div class="acc-a">
+                <p>On this demo site you can remove local demo data using the Data Tools. For real projects we will accept verified deletion requests via WhatsApp or email — see the Contact section.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-q" tabindex="0"><h4>How to escalate</h4><div class="tag muted">support</div></div>
+              <div class="acc-a">
+                <p>If you are unhappy with our response, contact us at the WhatsApp number or Instagram handle and we will escalate your request internally.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT: data tools, quick links -->
+      <aside>
+        <div class="box" role="region" aria-label="Data tools">
+          <strong>Data Tools (demo)</strong>
+          <p class="muted" style="margin-top:8px">Use these tools to export or clear demo data stored locally in your browser.</p>
+
+          <div style="margin-top:12px" class="tools">
+            <button id="exportJson" class="btn">Export JSON</button>
+            <button id="exportCsv" class="btn ghost">Export CSV</button>
+          </div>
+
+          <div style="margin-top:10px" class="tools">
+            <button id="deleteReviews" class="btn warn">Delete Vouches</button>
+            <button id="deleteContacts" class="btn ghost">Delete Contacts</button>
+          </div>
+
+          <div style="margin-top:14px" class="muted small">Keys checked: <code>romanci_reviews</code>, <code>romanci_contacts</code>, <code>romanci_quotes</code></div>
+        </div>
+
+        <div class="box" style="margin-top:12px" role="region" aria-label="More info">
+          <strong>More options</strong>
+          <ul style="margin-top:10px">
+            <li class="muted">Request data via WhatsApp: <a href="https://wa.me/917736574585?text=Data%20request" target="_blank">Send message</a></li>
+            <li class="muted" style="margin-top:6px">Instagram: <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a></li>
+            <li class="muted" style="margin-top:6px">Demo mode: localStorage only — no server persistence.</li>
+          </ul>
+        </div>
+
+        <div class="box" style="margin-top:12px" role="region" aria-label="Retention">
+          <strong>Retention & security</strong>
+          <p class="muted" style="margin-top:8px">Data is retained only as long as necessary. For demo localStorage persists until cleared. For paid services we agree retention periods in contracts.</p>
+        </div>
+      </aside>
+
+    </div> <!-- .grid -->
+
+    <div style="margin-top:18px" class="muted small">Note: This privacy policy is provided as a clear, practical guide for users of the Romanci demo site. It is not legal advice. For enterprise contracts we provide a tailored agreement including data processing addendum (DPA) where required.</div>
+
+  </main>
+
+  <footer>
+    © <strong>ROMANCI</strong> — WhatsApp: <a href="https://wa.me/917736574585?text=Hello%20Romanci" target="_blank">+91 77365 74585</a> · Instagram <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a>
+  </footer>
+</div>
+
+<!-- Inline JavaScript: accordion, data export/delete utilities -->
+<script>
+(function(){
+  // Accordion behaviour
+  document.querySelectorAll('.acc-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('open');
+      // close others (optional) - keep user-friendly single-open
+      document.querySelectorAll('.acc-item').forEach(i => { if(i !== item) i.classList.remove('open'); });
+    });
+    q.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); } });
+  });
+
+  // Helper: download a blob as file
+  function download(filename, text){
+    const blob = new Blob([text], {type: 'application/octet-stream'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // Data utilities: keys we support (demo)
+  const KEYS = ['romanci_reviews','romanci_contacts','romanci_quotes'];
+
+  // Load all known data into one object
+  function gatherData(){
+    const out = {};
+    KEYS.forEach(k => {
+      try { out[k] = JSON.parse(localStorage.getItem(k) || '[]'); } catch(e) { out[k] = []; }
+    });
+    // also include timestamp and user-agent for context
+    out._meta = { exportedAt: new Date().toISOString(), ua: navigator.userAgent };
+    return out;
+  }
+
+  // Export JSON
+  document.getElementById('exportJson').addEventListener('click', () => {
+    const data = gatherData();
+    download('romanci-data.json', JSON.stringify(data, null, 2));
+  });
+
+  // Export CSV (simple flatten for vouches and contacts)
+  document.getElementById('exportCsv').addEventListener('click', () => {
+    const reviews = (()=>{ try { return JSON.parse(localStorage.getItem('romanci_reviews')||'[]'); } catch(e){ return []; } })();
+    if(!reviews || reviews.length === 0){ alert('No vouches to export'); return; }
+    // CSV: id,name,role,text,ts,status
+    const header = ['id','name','role','text','ts','status'];
+    const rows = reviews.map(r => header.map(h => `"${String((r[h]||'')).replace(/"/g,'""')}"`).join(','));
+    const csv = [header.join(','), ...rows].join('\n');
+    download('romanci-vouches.csv', csv);
+  });
+
+  // Delete helpers
+  document.getElementById('deleteReviews').addEventListener('click', () => {
+    if(!confirm('Delete all local vouches? This will remove demo data stored in your browser.')) return;
+    localStorage.removeItem('romanci_reviews');
+    alert('Vouches removed locally.');
+  });
+
+  document.getElementById('deleteContacts').addEventListener('click', () => {
+    if(!confirm('Delete all local contact messages?')) return;
+    localStorage.removeItem('romanci_contacts');
+    alert('Contacts removed locally.');
+  });
+
+  // Smooth anchor scrolling for TOC links
+  document.querySelectorAll('.toc a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if(!href || href.charAt(0) !== '#') return;
+      e.preventDefault()

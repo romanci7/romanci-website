@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romanci — Contact</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#faf7f2;
+  --panel:#f1eae2;
+  --ink:#1f1816;
+  --muted:#7d6e68;
+  --accent:#2a1d19;
+  --radius:16px;
+  --ease:cubic-bezier(.2,.9,.25,1);
+}
+
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,system-ui;
+  background:var(--bg);
+  color:var(--ink);
+}
+
+/* LAYOUT */
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:50px 22px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:50px;
+}
+
+.brand{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  letter-spacing:4px;
+}
+
+nav a{
+  margin-left:16px;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+}
+
+nav a:hover{color:var(--ink)}
+
+/* FORM CARD */
+.contact-wrap{
+  max-width:700px;
+  margin:0 auto;
+  background:var(--panel);
+  padding:36px;
+  border-radius:20px;
+  box-shadow:0 40px 120px rgba(0,0,0,.08);
+  animation:fadeUp .8s var(--ease);
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.lead{
+  color:var(--muted);
+  margin-bottom:28px;
+}
+
+/* FORM */
+label{
+  display:block;
+  font-weight:600;
+  margin:14px 0 6px;
+}
+
+input,textarea{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,.06);
+  background:#fff;
+  font-size:15px;
+  transition:.25s;
+}
+
+textarea{min-height:120px}
+
+input:focus,textarea:focus{
+  outline:none;
+  border-color:rgba(0,0,0,.25);
+  transform:scale(1.01);
+}
+
+/* BUTTON */
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:22px;
+}
+
+.btn{
+  padding:14px 22px;
+  border-radius:999px;
+  border:0;
+  cursor:pointer;
+  font-weight:700;
+  background:var(--accent);
+  color:#fff;
+  transition:.3s var(--ease);
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+
+/* POPUP */
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.overlay.show{display:flex}
+
+.blur{
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(6px);
+}
+
+.popup{
+  position:relative;
+  background:#fff;
+  padding:28px 34px;
+  border-radius:20px;
+  max-width:380px;
+  text-align:center;
+  z-index:1;
+  box-shadow:0 40px 120px rgba(0,0,0,.18);
+  animation:pop .45s var(--ease);
+}
+
+@keyframes pop{
+  from{opacity:0;transform:scale(.95)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.popup h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+}
+
+.popup p{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+/* FLOATING SOCIAL BUTTONS */
+.social-float{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:900;
+}
+
+.social-btn{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(8px);
+  box-shadow:0 16px 40px rgba(0,0,0,.18);
+  text-decoration:none;
+  transition:.3s var(--ease);
+}
+
+.social-btn:hover{
+  transform:translateY(-4px) scale(1.05);
+}
+
+/* COLORS */
+.whatsapp{background:#25d366}
+.instagram{
+  background:radial-gradient(circle at 30% 30%,
+  #feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+}
+
+/* MOBILE */
+@media(max-width:700px){
+  h1{font-size:28px}
+  .contact-wrap{padding:26px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="container">
+  <div class="brand">ROMANCI</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="offers.html">What We Offer</a>
+    <a href="faq.html">FAQ</a>
+    <a href="vouch.html">Vouch</a>
+  </nav>
+</header>
+
+<main class="container">
+
+<section class="contact-wrap">
+
+<h1>Contact Romanci</h1>
+<p class="lead">Reach us directly or leave a message below.</p>
+
+<form id="contactForm">
+
+<label>Name</label>
+<input type="text" required>
+
+<label>Email</label>
+<input type="email" required>
+
+<label>Message</label>
+<textarea required></textarea>
+
+<div class="actions">
+<button class="btn" type="submit">Send Message</button>
+</div>
+
+</form>
+
+</section>
+
+</main>
+
+<!-- SUCCESS POPUP -->
+<div class="overlay" id="overlay">
+  <div class="blur"></div>
+  <div class="popup">
+    <h3>Message Sent</h3>
+    <p>Thank you for contacting Romanci. Redirecting you shortly…</p>
+  </div>
+</div>
+
+<!-- FLOATING SOCIAL -->
+<div class="social-float">
+
+<a class="social-btn whatsapp"
+   href="https://wa.me/917736574585"
+   target="_blank"
+   aria-label="WhatsApp">
+   🟢
+</a>
+
+<a class="social-btn instagram"
+   href="https://instagram.com/1hdzl"
+   target="_blank"
+   aria-label="Instagram">
+   📸
+</a>
+
+</div>
+
+<script>
+const form = document.getElementById('contactForm');
+const overlay = document.getElementById('overlay');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  overlay.classList.add('show');
+
+  setTimeout(()=>{
+    window.location.href = "index.html";
+  }, 3000);
+});
+</script>
+
+</body>
+</html>

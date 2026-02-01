@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Romanci — FAQ (Extended Premium)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#fbf8f4;
+  --card:#fff;
+  --panel:#f6efe9;
+  --accent:#2f201c;
+  --muted:#7d6e65;
+  --radius:14px;
+  --gap:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui;background:linear-gradient(180deg,var(--bg),#fff);color:var(--accent);-webkit-font-smoothing:antialiased}
+.header{padding:20px 24px;border-bottom:1px solid rgba(36,26,24,0.04);background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.95))}
+.header .brand{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:3px;font-size:20px}
+.container{max-width:1100px;margin:34px auto;padding:0 20px}
+.hero{margin-bottom:18px}
+.hero h1{font-family:'Playfair Display',serif;font-size:36px;margin:6px 0}
+.hero p{color:var(--muted);max-width:900px}
+
+/* controls */
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0}
+.input{padding:12px 14px;border-radius:12px;border:1px solid rgba(36,26,24,0.06);min-width:260px}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(36,26,24,0.06);background:white;cursor:pointer;font-weight:600}
+.pill.active{background:var(--accent);color:white;border-color:transparent}
+
+/* FAQ list */
+.faq-list{margin-top:18px;background:var(--panel);border-radius:14px;padding:6px}
+.faq-item{border-bottom:1px solid rgba(36,26,24,0.04);padding:14px 16px}
+.faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:12px}
+.faq-q h3{font-size:16px;margin:0;font-weight:700}
+.faq-q .meta{font-size:13px;color:var(--muted);margin-left:8px}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .28s ease, padding .28s ease}
+.faq-item.open .faq-a{padding-top:12px;max-height:400px}
+.faq-a p{margin:0;color:var(--muted);line-height:1.6}
+
+/* utility */
+.small{font-size:13px;color:var(--muted)}
+.search-info{margin-left:auto;color:var(--muted);font-weight:600}
+
+/* footer */
+.footer{margin-top:28px;padding:26px 0;border-top:1px solid rgba(36,26,24,0.04);text-align:center;color:var(--muted)}
+
+/* responsive */
+@media (max-width:880px){
+  .faq-q{flex-direction:column;align-items:flex-start}
+  .search-info{margin-left:0;margin-top:8px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand" style="display:flex;align-items:center;gap:12px">
+    <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#e9d9c7,#efe6dc);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)">R</div>
+    ROMANCI
+  </div>
+</header>
+
+<main class="container" id="main">
+  <section class="hero">
+    <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+      <h1>Frequently Asked Questions</h1>
+      <div class="small" style="margin-left:8px">Clear answers about services, policies, and workflows.</div>
+    </div>
+    <p class="small" style="margin-top:8px">If you don’t find your question here, hit the contact page or send a WhatsApp to +91 77365 74585 and I’ll respond personally.</p>
+  </section>
+
+  <section class="controls" aria-hidden="false">
+    <input id="search" class="input" placeholder="Search FAQs — try 'refund', 'verification', 'discord'..." />
+    <div class="pills" id="pills" role="tablist" aria-label="FAQ categories"></div>
+    <div class="search-info small" id="matchCount">Showing <strong>0</strong> results</div>
+  </section>
+
+  <section class="faq-list" id="faqList" aria-live="polite">
+    <!-- faq items inserted by JS -->
+  </section>
+
+  <div class="footer">
+    <div>© ROMANCI — Premium Digital Solutions · Instagram <a href="https://instagram.com/1hdzl" target="_blank">@1hdzl</a> · WhatsApp <a href="https://wa.me/917736574585?text=Hello%20Romanci" target="_blank">+91 77365 74585</a></div>
+  </div>
+</main>
+
+<script>
+// Expanded premium FAQ content + UI
+const FAQS = [
+  // General
+  {q:"What services does Romanci provide?", a:"We specialize in social media account recovery and verification support, Discord server development and automation, premium website design, security audits, and brand reputation work.", cat:"General"},
+  {q:"How do I start a project?", a:"Use the Contact page or send a WhatsApp to +91 77365 74585. For faster handling, include platform names, account handles, and a brief summary of the issue.", cat:"General"},
+  {q:"Which platforms do you support?", a:"We work with Instagram, Facebook, X (Twitter), YouTube, TikTok, Discord, and WordPress-based sites. For other platforms, contact us to confirm support.", cat:"General"},
+
+  // Refund & Payments
+  {q:"What is your refund policy?", a:"Refunds are possible within 7 days for prepaid work that has not yet commenced. Custom development or work-in-progress is non-refundable once active steps are taken.", cat:"Refund"},
+  {q:"How do I pay you?", a:"We accept payments via bank transfer, UPI, or other agreed channels. For larger projects we arrange a simple agreement and staged payments.", cat:"Payments"},
+  {q:"Do you offer invoices and receipts?", a:"Yes. For every paid engagement we provide an invoice and a receipt on request.", cat:"Payments"},
+
+  // Verification & Account Recovery
+  {q:"Can you guarantee verification (blue check)?", a:"No reputable provider can guarantee verification — decisions are made by platforms. We prepare and submit compliant applications to maximize the chance of approval.", cat:"Verification"},
+  {q:"How long does account recovery usually take?", a:"Small recoveries can complete within 48–72 hours if platforms respond quickly. Complex or enterprise cases can take days to weeks depending on platform support response times.", cat:"Verification"},
+  {q:"What information do you need to start recovery?", a:"Typically: account handle, email used for the account, a brief timeline of what happened, and any platform emails you received. Never share plain-text passwords in initial outreach.", cat:"Verification"},
+
+  // Security & Data
+  {q:"Will you ask for my password?", a:"We do not ask for passwords. If platform verification requires proof of ownership that includes screenshots or device details, we will advise secure methods for sharing only what’s necessary.", cat:"Security"},
+  {q:"How do you protect my data?", a:"We use encrypted channels for communication when required and follow standard best-practices for data handling. For sensitive cases we can sign an NDA.", cat:"Security"},
+  {q:"Do you store my submissions?", a:"Demo site versions may store vouches locally; production projects have agreed storage policies. You can request deletion of your data at any time.", cat:"Security"},
+
+  // Discord
+  {q:"Can you build a Discord bot for moderation?", a:"Yes. We build bots for verification, auto-moderation, role management, giveaways, and analytics — using Discord’s official API and recommended libraries.", cat:"Discord"},
+  {q:"Do bots run 24/7?", a:"Bots run on servers or cloud instances you or we host. We provide setup and optionally managed hosting for continuous uptime.", cat:"Discord"},
+  {q:"Can you migrate members between servers?", a:"Discord’s API limits bulk migration. We can implement invite systems, role mapping, and onboarding flows to smoothly transition communities.", cat:"Discord"},
+
+  // Website & Development
+  {q:"Do you provide hosting?", a:"We can advise on hosting and configure it (DigitalOcean, Netlify, Vercel, etc.) but hosting costs are billed separately unless included in a managed plan.", cat:"Website"},
+  {q:"Will my site be mobile-friendly?", a:"Yes — all website builds are responsive and tested across modern devices and viewport sizes.", cat:"Website"},
+  {q:"Can you connect custom domains?", a:"Absolutely. We help register domains or connect existing domains and configure DNS and SSL.", cat:"Website"},
+
+  // Process & Deliverables
+  {q:"What does your typical process look like?", a:"We analyze the issue, prepare a compliant plan, execute recovery or build, and hand over final deliverables with documentation and post-delivery support windows.", cat:"Process"},
+  {q:"Do you provide post-launch support?", a:"Yes — support options are included in most packages (e.g., 30 days post-delivery) and extended support can be purchased.", cat:"Process"},
+  {q:"Will you provide documentation?", a:"Every technical deliverable includes basic documentation. Full handbooks or runbooks can be prepared on request.", cat:"Process"},
+
+  // Legal / Terms
+  {q:"Who owns the work produced?", a:"Clients receive ownership of deliverables after full payment, unless another arrangement is agreed in writing.", cat:"Legal"},
+  {q:"Do you use NDAs?", a:"We can sign an NDA for sensitive projects. Contact us to request one before sharing confidential information.", cat:"Legal"},
+  {q:"Are your services legal and policy-compliant?", a:"We act ethically and follow platform rules. We won’t assist with illegal activity or methods that intentionally violate platform policies.", cat:"Legal"},
+
+  // Billing & Contracts
+  {q:"Can I get a custom quote?", a:"Yes — use the Request Quote or Contact options and provide project details. We’ll respond with scope, timeline and pricing.", cat:"Billing"},
+  {q:"What payment terms do you use?", a:"Typical engagements require an upfront deposit (e.g., 30%) with staged payments for larger projects. Exact terms are set in the written agreement.", cat:"Billing"},
+
+  // Troubleshooting & Support
+  {q:"I submitted a vouch — when will it appear?", a:"On demo sites vouches appear immediately. On production platforms we moderate vouches — typical publication time is within 24 hours.", cat:"Support"},
+  {q:"How do I escalate an urgent case?", a:"Send a WhatsApp message to +91 77365 74585 with the subject 'URGENT' and include the account and short summary; we triage critical cases faster.", cat:"Support"},
+  {q:"What if a platform refuses to restore my account?", a:"If official channels refuse, we document the decision, suggest next steps (e.g., legal options if appropriate), and offer support for improving future appeal attempts.", cat:"Support"},
+
+  // Privacy & Data Rights
+  {q:"Can I request deletion of my data?", a:"Yes — contact us and we will process deletion requests for personal data stored in our systems, subject to legal retention requirements.", cat:"Privacy"},
+  {q:"Do you sell my data?", a:"No. Romanci does not sell personal data. Data is only used to perform agreed services and for operational needs.", cat:"Privacy"}
+];
+
+// categories (order matters for pills)
+const CATS = ["All","General","Refund","Payments","Verification","Security","Discord","Website","Process","Legal","Billing","Support","Privacy"];
+
+// UI elements
+const faqList = document.getElementById('faqList');
+const pills = document.getElementById('pills');
+const search = document.getElementById('search');
+const matchCount = document.getElementById('matchCount');
+
+let activeCat = 'All';
+let query = '';
+
+// helper: escape
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
+
+// render pills
+function renderPills(){
+  pills.innerHTML = '';
+  CATS.forEach(cat=>{
+    const b = document.createElement('button');
+    b.className = 'pill' + (cat === activeCat ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = ()=>{ activeCat = cat; renderList(); };
+    pills.appendChild(b);
+  });
+}
+
+// render list
+function renderList(){
+  faqList.innerHTML = '';
+  const q = (query || '').trim().toLowerCase();
+  let list = FAQS.filter(item=>{
+    if(activeCat !== 'All' && item.cat !== activeCat) return false;
+    if(!q) return true;
+    return (item.q + ' ' + item.a + ' ' + item.cat).toLowerCase().includes(q);
+  });
+
+  matchCount.innerHTML = `Showing <strong>${list.length}</strong> results`;
+
+  if(list.length === 0){
+    faqList.innerHTML = `<div style="padding:18px;color:var(--muted)">No results — try a different search or check spelling.</div>`;
+    return;
+  }
+
+  // build elements
+  const frag = document.createDocumentFragment();
+  for(const it of list){
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = `
+      <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+        <h3>${escapeHtml(it.q)}</h3>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="meta small">${escapeHtml(it.cat)}</div>
+          <div style="font-weight:700;color:var(--muted);">+</div>
+        </div>
+      </div>
+      <div class="faq-a"><p>${escapeHtml(it.a)}</p></div>
+    `;
+    // toggle behavior
+    const qEl = item.querySelector('.faq-q');
+    qEl.addEventListener('click', ()=> toggleItem(item));
+    qEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleItem(item); } });
+    frag.appendChild(item);
+  }
+  faqList.appendChild(frag);
+}
+
+// toggle
+function toggleItem(item){
+  const isOpen = item.classList.contains('open');
+  // close others for tidy UX
+  document.querySelectorAll('.faq-item.open').forEach(el=>{
+    if(el !== item) el.classList.remove('open');
+  });
+  if(isOpen) item.classList.remove('open'); else item.classList.add('open');
+}
+
+// search handling
+search.addEventListener('input', (e)=>{
+  query = e.target.value;
+  renderList();
+});
+
+// init
+renderPills();
+renderList();
+
+// keyboard: close all on ESC
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') document.querySelectorAll('.faq-item.open').forEach(it=>it.classList.remove('open')); });
+</script>
+
+</body>
+</html>
