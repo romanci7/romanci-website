@@ -1,394 +1,76 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Romanci — Vouch (Testimonials)</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg:#fbf8f4;
-  --muted:#85756f;
-  --ink:#241b18;
-  --accent:#2f201c;
-  --card:#fff7f4;
-  --radius:14px;
-  --ease:cubic-bezier(.2,.9,.25,1);
-  --glass-border: rgba(36,26,24,0.03);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  background:linear-gradient(180deg,#fbf8f4,#fff);
-  color:var(--ink);-webkit-font-smoothing:antialiased;
-}
-.container{max-width:1100px;margin:0 auto;padding:28px}
-
-/* Header */
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-.brand{font-family:'Playfair Display',serif;letter-spacing:3px;font-size:20px}
-.header nav{display:flex;gap:12px}
-.header a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 10px;border-radius:8px}
-.header a:hover{color:var(--accent);background:rgba(36,26,24,0.03)}
-
-/* Layout */
-.grid{display:grid;grid-template-columns:1fr 420px;gap:20px}
-.card{background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--glass-border);box-shadow:0 18px 50px rgba(36,26,24,0.04)}
-.title{font-family:'Playfair Display',serif;font-size:26px;margin:0 0 8px}
-.lead{color:var(--muted);margin-bottom:12px}
-
-/* Form */
-.form-row{display:grid;gap:8px}
-.input, textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(36,26,24,0.06);font-size:14px}
-textarea{min-height:110px;resize:vertical}
-.actions{display:flex;gap:10px;margin-top:10px;align-items:center}
-.btn{padding:10px 16px;border-radius:999px;border:0;background:var(--accent);color:white;cursor:pointer;font-weight:700}
-.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(36,26,24,0.06)}
-.small-muted{color:var(--muted);font-size:13px}
-
-/* Feed */
-.feed{display:flex;flex-direction:column;gap:8px}
-.feed-item{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(36,26,24,0.03)}
-.feed-item .meta{font-size:13px;color:var(--muted)}
-.feed-empty{color:var(--muted)}
-
-/* overlay / popup */
-.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:90}
-.overlay.show{display:flex}
-.overlay .bg{position:absolute;inset:0;background:rgba(20,16,14,0.4);backdrop-filter:blur(6px)}
-.popup{position:relative;background:#fff;padding:22px;border-radius:12px;max-width:540px;width:92%;box-shadow:0 40px 120px rgba(20,16,14,0.24);text-align:center}
-.popup h3{margin:0 0 8px}
-.popup p{color:var(--muted);margin:0 0 12px}
-
-/* status bar / cooldown */
-.status{margin-top:10px;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff8f6);border:1px solid rgba(36,26,24,0.03);color:var(--muted)}
-
-/* small helper */
-.note{font-size:13px;color:var(--muted);margin-top:8px}
-
-/* responsive */
-@media (max-width:980px){
-  .grid{grid-template-columns:1fr;gap:14px}
-  .header{flex-direction:column;align-items:flex-start;gap:10px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vouch - Romanci</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .vouch-item { background: #f6efe9; padding:16px; margin-bottom:12px; border-radius:12px; transition:0.3s; opacity:0; transform:translateY(10px);}
+    .vouch-item.show { opacity:1; transform:translateY(0);}
+    #toast { position:fixed; bottom:30px; right:20px; background:#333; color:white; padding:12px 20px; border-radius:10px; display:none; }
+    form { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+  </style>
 </head>
 <body>
-  <header class="container header">
-    <div class="brand">ROMANCI</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="offers.html">Services</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+  <div class="container">
+    <h1>Send a Vouch</h1>
+    <form id="vouchForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <textarea id="message" placeholder="Your Vouch Message" required></textarea>
+      <button type="submit">Send Vouch</button>
+    </form>
 
-  <main class="container">
-    <section style="margin-bottom:10px">
-      <h1 class="title">Customer Vouches</h1>
-      <div class="lead">Clients and visitors can share short vouches. Vouches are visible in the live feed (demo). Rate limit: one vouch per 12 hours per visitor — enforced per-IP when possible, otherwise per browser.</div>
-    </section>
-
-    <div class="grid">
-      <!-- Left: form -->
-      <div class="card" aria-live="polite">
-        <h2 style="margin:0 0 10px">Submit a Vouch</h2>
-        <div class="form-row" id="formRow">
-          <input id="name" class="input" placeholder="Your name" />
-          <input id="role" class="input" placeholder="Role / Company (optional)" />
-          <textarea id="message" class="input" placeholder="Share your experience"></textarea>
-
-          <div class="actions">
-            <button id="sendBtn" class="btn">Send Vouch</button>
-            <button id="clearBtn" class="btn ghost">Clear All</button>
-            <div id="cooldownNote" class="note" style="margin-left:auto"></div>
-          </div>
-
-          <div class="status" id="statusBox">
-            <div id="rateText">Checking rate limit... (best-effort)</div>
-            <div class="note" style="margin-top:8px">This demo enforces 1 vouch / 12 hours per visitor. For full enforcement across devices and accounts, use a server-side backend (Supabase/Firebase/your API).</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: live feed -->
-      <aside class="card">
-        <h2 style="margin:0 0 10px">Live Vouches</h2>
-        <div id="feed" class="feed" aria-live="polite" aria-atomic="true">
-          <div class="feed-empty">Loading vouches…</div>
-        </div>
-
-        <div style="margin-top:12px" class="note">Notes: the feed is stored in your browser (localStorage) and shared in other tabs of the same browser (when supported). To make vouches visible to all visitors use a server backend.</div>
-      </aside>
-    </div>
-  </main>
-
-  <!-- Thank you popup -->
-  <div id="overlay" class="overlay" aria-hidden="true">
-    <div class="bg" aria-hidden="true"></div>
-    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="thanksTitle">
-      <h3 id="thanksTitle">Thanks — Vouch submitted</h3>
-      <p id="thanksText">Your vouch was received and added to the live feed (demo only).</p>
-      <div style="margin-top:12px">
-        <a id="homeBtn" href="index.html" class="btn" style="margin-right:8px;display:none">Go to Home</a>
-        <button id="closePopup" class="btn ghost">Close</button>
-      </div>
-    </div>
+    <h2>Approved Vouches</h2>
+    <div id="vouchList"></div>
   </div>
 
-<script>
-/*
-  vouch.html
-  - Saves vouches to localStorage key ROMANCI_VOUCHES (array)
-  - Attempts per-IP rate limiting using ipify (best-effort)
-  - Falls back to per-browser rate limit (localStorage) when IP unavailable
-  - Broadcasts updates to other tabs via BroadcastChannel (if supported)
-  - Shows thank-you popup for 3 seconds, then reveals Home button
-  - 12-hour cooldown (12 * 60 * 60 * 1000 ms)
-*/
+  <div id="toast">Thank you for your vouch!</div>
 
-/* === Config === */
-const STORAGE_KEY = 'ROMANCI_VOUCHES';
-const LOCK_KEY_BROWSER = 'ROMANCI_VOUCH_LOCK_BROWSER'; // timestamp of last vouch (per browser fallback)
-const LOCK_PREFIX_IP = 'ROMANCI_VOUCH_LOCK_IP_';      // + ip -> timestamp
-const COOLDOWN_MS = 12 * 60 * 60 * 1000; // 12 hours
+  <script>
+    const vouchForm = document.getElementById('vouchForm');
+    const vouchList = document.getElementById('vouchList');
+    const toast = document.getElementById('toast');
 
-/* === DOM === */
-const nameEl = document.getElementById('name');
-const roleEl = document.getElementById('role');
-const msgEl = document.getElementById('message');
-const sendBtn = document.getElementById('sendBtn');
-const clearBtn = document.getElementById('clearBtn');
-const feedEl = document.getElementById('feed');
-const overlay = document.getElementById('overlay');
-const closePopup = document.getElementById('closePopup');
-const homeBtn = document.getElementById('homeBtn');
-const rateText = document.getElementById('rateText');
-const cooldownNote = document.getElementById('cooldownNote');
-
-/* === Utilities === */
-function now(){ return Date.now(); }
-function saveVouches(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
-function loadVouches(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; } }
-function formatTimeRemaining(ms){
-  if(ms <= 0) return '0s';
-  const s = Math.floor(ms/1000)%60;
-  const m = Math.floor(ms/60000)%60;
-  const h = Math.floor(ms/3600000);
-  if(h>0) return `${h}h ${m}m`;
-  if(m>0) return `${m}m ${s}s`;
-  return `${s}s`;
-}
-function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
-
-/* === Broadcast support for tab sync === */
-let bc;
-if('BroadcastChannel' in window){
-  try { bc = new BroadcastChannel('romanci_vouch_channel'); bc.onmessage = e => { if(e.data === 'refresh_vouches') renderFeed(); }; } catch(e){ bc = null; }
-}
-
-/* === IP detection (best-effort) ===
-   Attempt to fetch public IP via ipify. This will work when the user's environment allows outgoing fetch to that service.
-   If it fails due to network or CORS, we'll fallback to per-browser lock (localStorage).
-*/
-let clientIP = null;
-async function detectIP(){
-  try{
-    const resp = await fetch('https://api.ipify.org?format=json', {cache:'no-store'});
-    if(!resp.ok) throw new Error('ip fetch failed');
-    const j = await resp.json();
-    clientIP = j.ip;
-    console.info('Detected IP:', clientIP);
-  }catch(err){
-    clientIP = null;
-    console.info('IP detection failed — falling back to browser-only lock.', err);
-  } finally {
-    updateRateStatus();
-  }
-}
-
-/* === Rate limiting logic === */
-function getLastVouchTimeForThisVisitor(){
-  // Prefer IP lock
-  if(clientIP){
-    const key = LOCK_PREFIX_IP + clientIP;
-    const v = parseInt(localStorage.getItem(key) || '0', 10);
-    if(v) return v;
-  }
-  // Fallback: per-browser timestamp
-  const v = parseInt(localStorage.getItem(LOCK_KEY_BROWSER) || '0', 10);
-  return v || 0;
-}
-
-function setLastVouchTimeForThisVisitor(ts){
-  if(clientIP){
-    const key = LOCK_PREFIX_IP + clientIP;
-    localStorage.setItem(key, String(ts));
-  } else {
-    localStorage.setItem(LOCK_KEY_BROWSER, String(ts));
-  }
-}
-
-/* === UI: render feed === */
-function renderFeed(){
-  const arr = loadVouches().slice().reverse();
-  feedEl.innerHTML = '';
-  if(arr.length === 0){
-    feedEl.innerHTML = '<div class="feed-empty">No vouches yet — be the first to vouch.</div>';
-    return;
-  }
-  arr.forEach(v => {
-    const div = document.createElement('div');
-    div.className = 'feed-item';
-    const date = new Date(v.ts);
-    div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-      <div><strong>${escapeHtml(v.name)}</strong><div class="meta">${escapeHtml(v.role||'')}</div></div>
-      <div style="font-size:12px;color:var(--muted)">${date.toLocaleString()}</div>
-    </div>
-    <p style="margin-top:8px;color:var(--muted)">${escapeHtml(v.text)}</p>`;
-    feedEl.appendChild(div);
-  });
-}
-
-/* === Cooldown & UI flows === */
-let cooldownTimer = null;
-function updateRateStatus(){
-  const last = getLastVouchTimeForThisVisitor();
-  const remaining = (last ? (last + COOLDOWN_MS - now()) : 0);
-  if(remaining > 0){
-    // disabled
-    sendBtn.disabled = true;
-    sendBtn.style.opacity = 0.6;
-    rateText.textContent = `You can submit another vouch in ${formatTimeRemaining(remaining)}. (Per visitor limit: 12 hours)`;
-    // show a small countdown near the button
-    cooldownNote.textContent = `Wait ${formatTimeRemaining(remaining)} to submit again`;
-    // update every second
-    if(cooldownTimer) clearInterval(cooldownTimer);
-    cooldownTimer = setInterval(()=>{
-      const rem = (last + COOLDOWN_MS - now());
-      if(rem <= 0){ clearInterval(cooldownTimer); cooldownTimer=null; updateRateStatus(); return; }
-      rateText.textContent = `You can submit another vouch in ${formatTimeRemaining(rem)}. (Per visitor limit: 12 hours)`;
-      cooldownNote.textContent = `Wait ${formatTimeRemaining(rem)} to submit again`;
-    }, 1000);
-  } else {
-    sendBtn.disabled = false; sendBtn.style.opacity = 1;
-    rateText.textContent = clientIP ? `Ready — your IP: ${clientIP}` : 'Ready — per-browser submission enforced (no IP available).';
-    cooldownNote.textContent = '';
-    if(cooldownTimer){ clearInterval(cooldownTimer); cooldownTimer=null; }
-  }
-}
-
-/* === Submitting a vouch === */
-async function trySubmitVouch(){
-  // check again just before submit
-  const last = getLastVouchTimeForThisVisitor();
-  if(last && (last + COOLDOWN_MS > now())){
-    updateRateStatus();
-    showTempPopup('You must wait before sending another vouch.','Please wait');
-    return;
-  }
-
-  const name = nameEl.value.trim();
-  const role = roleEl.value.trim();
-  const text = msgEl.value.trim();
-  if(!name || !text){
-    showTempPopup('Name and message are required.','Incomplete');
-    return;
-  }
-  const vouch = { id: 'v'+Date.now(), name, role, text, ts: now(), ip: clientIP || null };
-  const arr = loadVouches(); arr.push(vouch); saveVouches(arr);
-
-  // set lock for this visitor
-  setLastVouchTimeForThisVisitor(now());
-
-  // broadcast to other tabs if available
-  if(bc) bc.postMessage('refresh_vouches');
-
-  // render feed immediately
-  renderFeed();
-
-  // show 3s thank-you popup and show home button
-  showThankYouPopup();
-
-  // clear form fields
-  nameEl.value=''; roleEl.value=''; msgEl.value='';
-
-  // update rate UI
-  updateRateStatus();
-}
-
-/* === Clear all demo vouches (local) === */
-function clearAllVouches(){
-  if(!confirm('Clear all demo vouches stored in this browser?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  renderFeed();
-  showToast('Demo vouches cleared');
-}
-
-/* === Popup helpers === */
-function showThankYouPopup(){
-  overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false');
-  // show home button after immediate submission (visible right away per request)
-  homeBtn.style.display='inline-block';
-  // auto hide after 3 seconds but keep Home button visible
-  setTimeout(()=> {
-    overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true');
-  }, 3000);
-}
-function showTempPopup(msg,title='Thanks'){
-  overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false');
-  document.querySelector('.popup h3').textContent = title;
-  document.querySelector('.popup p').textContent = msg;
-  homeBtn.style.display='none';
-  setTimeout(()=> { overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true'); }, 2200);
-}
-
-/* close popup handlers */
-closePopup.addEventListener('click', ()=> { overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true'); });
-homeBtn.addEventListener('click', ()=> { window.location.href = 'index.html'; });
-
-/* === Toast (small non-modal message) === */
-let toastTimer = null;
-function showToast(msg, ms = 2000){
-  const t = document.createElement('div');
-  t.textContent = msg;
-  Object.assign(t.style, {position:'fixed',right:'16px',top:'16px',background:'#111',color:'#fff',padding:'8px 12px',borderRadius:'8px',zIndex:2000,opacity:'1'});
-  document.body.appendChild(t);
-  if(toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=> { t.style.opacity='0'; setTimeout(()=> t.remove(),300); }, ms);
-}
-
-/* === Events === */
-sendBtn.addEventListener('click', ()=> trySubmitVouch());
-clearBtn.addEventListener('click', ()=> {
-  if(!confirm('Clear ALL demo vouches stored in your browser?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  // Also clear IP locks for this browser (only keys with the prefix)
-  try {
-    for(const k of Object.keys(localStorage)){
-      if(k.startsWith(LOCK_PREFIX_IP) || k === LOCK_KEY_BROWSER) localStorage.removeItem(k);
+    async function fetchVouches(){
+      const res = await fetch('/api/vouches');
+      const vouches = await res.json();
+      vouchList.innerHTML = '';
+      vouches.filter(v => v.approved).forEach(v => {
+        const div = document.createElement('div');
+        div.className = 'vouch-item';
+        div.innerHTML = `<strong>${v.name}</strong><p>${v.message}</p>`;
+        vouchList.appendChild(div);
+        setTimeout(()=>div.classList.add('show'),50);
+      });
     }
-  } catch(e){}
-  renderFeed();
-  updateRateStatus();
-  showToast('Local demo data cleared');
-});
 
-/* === Initialize page === */
-renderFeed();
-detectIP(); // will call updateRateStatus() once done
-updateRateStatus();
+    vouchForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const ip = await fetch('https://api.ipify.org?format=json').then(res=>res.json()).then(d=>d.ip);
 
-/* sync on storage change (other tabs without BroadcastChannel) */
-window.addEventListener('storage', (e)=>{
-  if(e.key === STORAGE_KEY) renderFeed();
-  // If IP locks change in other tab, also update status
-  if(e.key && (e.key.startsWith(LOCK_PREFIX_IP) || e.key === LOCK_KEY_BROWSER)) updateRateStatus();
-});
-</script>
+      const res = await fetch('/api/vouch', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ name, message, ip })
+      });
+
+      const data = await res.json();
+      if(data.error){
+        alert(data.error);
+        return;
+      }
+
+      toast.style.display='block';
+      setTimeout(()=>toast.style.display='none',3000);
+
+      vouchForm.reset();
+      setTimeout(()=> window.location.href='index.html',3000);
+    });
+
+    fetchVouches();
+  </script>
 </body>
 </html>

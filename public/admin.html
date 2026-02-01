@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Romanci</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    table { width:100%; border-collapse: collapse; margin-top:20px; }
+    th, td { padding:12px; border:1px solid rgba(36,26,24,0.1); text-align:left; }
+    button { padding:6px 14px; border:none; border-radius:6px; cursor:pointer; margin-right:4px; transition:0.2s; }
+    button.approve { background:#28a745; color:white; }
+    button.delete { background:#dc3545; color:white; }
+    button.approve:hover { opacity:0.8; }
+    button.delete:hover { opacity:0.8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <p>Approve or delete vouches submitted by users.</p>
+    <table id="vouchTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchVouches(){
+      const res = await fetch('/api/vouches');
+      const vouches = await res.json();
+      const tbody = document.querySelector('#vouchTable tbody');
+      tbody.innerHTML = '';
+      vouches.forEach(v => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${v.id}</td>
+          <td>${v.name}</td>
+          <td>${v.message}</td>
+          <td>${v.approved ? 'Approved':'Pending'}</td>
+          <td>
+            ${v.approved ? '' : `<button class="approve" onclick="approveVouch(${v.id})">Approve</button>`}
+            <button class="delete" onclick="deleteVouch(${v.id})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function approveVouch(id){
+      await fetch(`/api/vouch/${id}/approve`, { method:'POST' });
+      fetchVouches();
+    }
+
+    async function deleteVouch(id){
+      await fetch(`/api/vouch/${id}`, { method:'DELETE' });
+      fetchVouches();
+    }
+
+    fetchVouches();
+  </script>
+</body>
+</html>
