@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ROMANCI Admin</title>
+<style>
+body{
+  background:#111;
+  color:#d4af37;
+  font-family:Arial;
+  padding:30px;
+}
+h1{ text-align:center; }
+.login, .panel{
+  max-width:400px;
+  margin:40px auto;
+  background:#1b1b1b;
+  padding:25px;
+  border-radius:12px;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+}
+button{
+  background:#d4af37;
+  border:none;
+  cursor:pointer;
+}
+.vouch{
+  border-bottom:1px solid #333;
+  padding:12px;
+}
+.approve{ background:green;color:white; }
+.delete{ background:red;color:white; }
+</style>
+</head>
+<body>
+
+<h1>ROMANCI ADMIN</h1>
+
+<div class="login" id="loginBox">
+  <input id="email" placeholder="Admin email">
+  <input id="password" type="password" placeholder="Password">
+  <button id="loginBtn">Login</button>
+</div>
+
+<div class="panel" id="panel" style="display:none;">
+  <h3>Pending Vouches</h3>
+  <div id="list"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore,collection,query,where,onSnapshot,updateDoc,deleteDoc,doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth,signInWithEmailAndPassword,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = €
+apikey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
+authDomain: "romanci-vouch.firebaseapp.com",
+ projectId: "romanci-vouch",
+ storageBucket: "romanci-vouch. firebasestorage.app",
+ messagingSenderId: "154787033593",
+ appId: "1:154787033593:
+ web: 24d3185cdedfdbaded8d28",
+ measurementId: "G-W6SHFKE1EC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// LOGIN
+loginBtn.onclick=()=>{
+ signInWithEmailAndPassword(auth,email.value,password.value)
+ .catch(e=>alert(e.message));
+};
+
+// AFTER LOGIN
+onAuthStateChanged(auth,user=>{
+ if(user){
+   loginBox.style.display="none";
+   panel.style.display="block";
+   loadVouches();
+ }
+});
+
+function loadVouches(){
+ const q=query(collection(db,"vouches"),where("approved","==",false));
+ onSnapshot(q,snap=>{
+   list.innerHTML="";
+   snap.forEach(d=>{
+     const v=d.data();
+     list.innerHTML+=`
+       <div class="vouch">
+         <b>${v.name}</b><br>${v.message}
+         <br><br>
+         <button class="approve" data-id="${d.id}">Approve</button>
+         <button class="delete" data-id="${d.id}">Delete</button>
+       </div>
+     `;
+   });
+
+   document.querySelectorAll(".approve").forEach(b=>{
+     b.onclick=()=>updateDoc(doc(db,"vouches",b.dataset.id),{approved:true});
+   });
+
+   document.querySelectorAll(".delete").forEach(b=>{
+     b.onclick=()=>deleteDoc(doc(db,"vouches",b.dataset.id));
+   });
+ });
+}
+</script>
+
+</body>
+</html>
