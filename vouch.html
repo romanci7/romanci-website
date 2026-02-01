@@ -1,238 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Romanci Vouch</title>
+<meta charset="UTF-8" />
+<title>ROMANCI — Vouches</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap');
-
 :root {
-  --gold: #c9a24d;
-  --dark-gold: #a8842c;
-  --cream: #f9f6ef;
-  --bg: #fffaf0;
-  --card: rgba(255,255,255,0.9);
-  --shadow: rgba(0,0,0,0.12);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --gold:#d4af37;
+  --cream:#fff8e9;
+  --dark:#111;
 }
 
 body {
-  background: linear-gradient(135deg, #fff8e6, #f3ead7);
-  font-family: 'Inter', sans-serif;
-  min-height: 100vh;
-  padding: 50px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin:0;
+  font-family:Inter, sans-serif;
+  background:linear-gradient(135deg,#fffaf0,#f5ecd5);
+  color:#222;
 }
 
-/* ---------- HEADER ---------- */
-
-.header {
-  text-align: center;
-  margin-bottom: 40px;
-  animation: fadeUp 1s ease;
+header {
+  padding:40px;
+  text-align:center;
+  font-family:"Playfair Display";
+  font-size:2.5rem;
+  letter-spacing:2px;
+  color:var(--gold);
 }
 
-.header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  letter-spacing: 3px;
-  color: var(--gold);
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:20px;
 }
 
-.header span {
-  display: block;
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 10px;
+/* FORM */
+.form-box {
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 20px 40px rgba(0,0,0,.1);
 }
 
-/* ---------- FORM ---------- */
-
-.vouch-form {
-  background: var(--card);
-  border-radius: 20px;
-  padding: 35px;
-  max-width: 520px;
-  width: 100%;
-  box-shadow: 0 20px 40px var(--shadow);
-  border: 1px solid rgba(201,162,77,0.25);
-  animation: fadeUp 1.3s ease;
-}
-
-.vouch-form h2 {
-  text-align: center;
-  color: var(--dark-gold);
-  margin-bottom: 25px;
-  font-family: 'Playfair Display', serif;
+.form-box h2 {
+  margin-top:0;
+  color:var(--gold);
 }
 
 input, textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  margin-bottom: 18px;
-  font-size: 1rem;
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:1rem;
 }
-
-input:focus, textarea:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,162,77,0.15);
-}
-
-textarea {
-  resize: none;
-  min-height: 110px;
-}
-
-/* ---------- BUTTON ---------- */
 
 button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--gold), var(--dark-gold));
-  color: white;
-  font-size: 1.05rem;
-  font-weight: 600;
-  transition: 0.3s ease;
+  background:linear-gradient(135deg,#e6c35a,#b9962e);
+  border:none;
+  color:white;
+  padding:14px 26px;
+  border-radius:999px;
+  font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(201,162,77,0.35);
+button:hover { transform:scale(1.05); }
+
+/* VOUCH GRID */
+#vouches {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:40px;
 }
 
-/* ---------- VOUCH LIST ---------- */
-
-.vouches {
-  max-width: 900px;
-  width: 100%;
-  margin-top: 60px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  animation: fadeUp 1.6s ease;
+.card {
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-.vouch-card {
-  background: var(--card);
-  padding: 25px;
-  border-radius: 18px;
-  border: 1px solid rgba(201,162,77,0.25);
-  box-shadow: 0 12px 25px var(--shadow);
-  transition: 0.3s ease;
+.card h4 {
+  margin:0;
+  color:var(--gold);
 }
 
-.vouch-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px var(--shadow);
+/* POPUP */
+.popup {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s;
 }
 
-.vouch-name {
-  font-weight: 600;
-  color: var(--dark-gold);
-  margin-bottom: 10px;
+.popup.show {
+  opacity:1;
+  pointer-events:auto;
 }
 
-.vouch-text {
-  line-height: 1.6;
-  color: #444;
+.popup-box {
+  background:white;
+  padding:35px;
+  border-radius:20px;
+  text-align:center;
+  max-width:300px;
 }
 
-/* ---------- ANIMATIONS ---------- */
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.popup-box h2 {
+  color:var(--gold);
 }
 
-/* ---------- MOBILE ---------- */
-
-@media(max-width:600px) {
-  .header h1 {
-    font-size: 2.3rem;
-  }
+.popup-box a {
+  display:block;
+  margin-top:12px;
+  text-decoration:none;
+  color:#333;
+  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <h1>ROMANCI VOUCH</h1>
-  <span>Trusted by our community • Premium experiences</span>
+<header>ROMANCI — Vouches</header>
+
+<div class="container">
+
+<div class="form-box">
+<h2>Leave a Vouch</h2>
+
+<form id="vouchForm">
+<input id="name" placeholder="Your name" required />
+<textarea id="text" rows="4" placeholder="Your vouch..." required></textarea>
+<button type="submit">Submit Vouch</button>
+</form>
 </div>
 
-<div class="vouch-form">
-  <h2>Leave Your Vouch</h2>
-  <form id="form">
-    <input type="text" id="name" placeholder="Your Name" required>
-    <textarea id="text" placeholder="Write your vouch here..." required></textarea>
-    <button type="submit">Submit Vouch</button>
-  </form>
+<section id="vouches"></section>
+
 </div>
 
-<div class="vouches" id="vouches"></div>
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h2>Thank you from ROMANCI ✨</h2>
+    <p>Your vouch was added.</p>
+    <a href="index.html"> Home</a>
+    <a href="#vouches"> Show Vouches</a>
+  </div>
+</div>
 
-<script>
-const form = document.getElementById("form");
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getFirestore, collection, addDoc,
+  query, orderBy, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* 🔥 PASTE YOUR CONFIG FROM FIREBASE HERE */
+const firebaseConfig = {
+  apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
+  authDomain: "romanci-vouch.firebaseapp.com",
+  projectId: "romanci-vouch",
+  storageBucket: "romanci-vouch.firebasestorage.app",
+  messagingSenderId: "154787033593",
+  appId: "1:154787033593:web:24d3185cdedfdbaded8d28",
+  measurementId: "G-W6SHFKE1EC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const form = document.getElementById("vouchForm");
 const list = document.getElementById("vouches");
+const popup = document.getElementById("popup");
 
-/* Default starter vouches */
-const starter = [
-  {name:"Ayaan", text:"Romanci service is top-tier. Clean design and smooth experience."},
-  {name:"Zara", text:"Luxury feel and fast delivery. Highly recommended."},
-  {name:"Ibrahim", text:"The gold theme really matches the premium brand vibe."}
-];
-
-let data = JSON.parse(localStorage.getItem("romanci_vouches")) || starter;
-
-function render() {
-  list.innerHTML = "";
-  data.forEach(v => {
-    const card = document.createElement("div");
-    card.className = "vouch-card";
-    card.innerHTML = `
-      <div class="vouch-name">${v.name}</div>
-      <div class="vouch-text">${v.text}</div>
-    `;
-    list.prepend(card);
-  });
-}
-
-render();
-
-form.addEventListener("submit", e => {
+/* SUBMIT */
+form.addEventListener("submit", async e => {
   e.preventDefault();
-  const name = document.getElementById("name").value.trim();
-  const text = document.getElementById("text").value.trim();
 
-  if(!name || !text) return;
+  await addDoc(collection(db,"vouches"),{
+    name: name.value,
+    text: text.value,
+    created: serverTimestamp()
+  });
 
-  data.push({name, text});
-  localStorage.setItem("romanci_vouches", JSON.stringify(data));
-  render();
   form.reset();
+
+  popup.classList.add("show");
+  setTimeout(()=>popup.classList.remove("show"),3000);
 });
+
+/* LIVE FEED */
+const q = query(collection(db,"vouches"), orderBy("created","desc"));
+
+onSnapshot(q, snap => {
+  list.innerHTML = "";
+  snap.forEach(doc=>{
+    const d = doc.data();
+    list.innerHTML += `
+      <div class="card">
+        <h4>${d.name}</h4>
+        <p>${d.text}</p>
+      </div>
+    `;
+  });
+});
+
 </script>
 
 </body>
