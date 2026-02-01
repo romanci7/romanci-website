@@ -1,76 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vouch - Romanci</title>
-  <link rel="stylesheet" href="assets/styles.css">
-  <style>
-    .vouch-item { background: #f6efe9; padding:16px; margin-bottom:12px; border-radius:12px; transition:0.3s; opacity:0; transform:translateY(10px);}
-    .vouch-item.show { opacity:1; transform:translateY(0);}
-    #toast { position:fixed; bottom:30px; right:20px; background:#333; color:white; padding:12px 20px; border-radius:10px; display:none; }
-    form { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Send a Vouch</h1>
-    <form id="vouchForm">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <textarea id="message" placeholder="Your Vouch Message" required></textarea>
-      <button type="submit">Send Vouch</button>
-    </form>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vouch Page</title>
+<style>
+  /* Google Fonts Import */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-    <h2>Approved Vouches</h2>
-    <div id="vouchList"></div>
-  </div>
+  :root {
+    --primary-color: #4f46e5;
+    --bg-color: #f3f4f6;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --shadow: rgba(0,0,0,0.1);
+  }
 
-  <div id="toast">Thank you for your vouch!</div>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
 
-  <script>
-    const vouchForm = document.getElementById('vouchForm');
-    const vouchList = document.getElementById('vouchList');
-    const toast = document.getElementById('toast');
+  body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    min-height: 100vh;
+    transition: background 0.3s ease;
+  }
 
-    async function fetchVouches(){
-      const res = await fetch('/api/vouches');
-      const vouches = await res.json();
-      vouchList.innerHTML = '';
-      vouches.filter(v => v.approved).forEach(v => {
-        const div = document.createElement('div');
-        div.className = 'vouch-item';
-        div.innerHTML = `<strong>${v.name}</strong><p>${v.message}</p>`;
-        vouchList.appendChild(div);
-        setTimeout(()=>div.classList.add('show'),50);
-      });
+  h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  p {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    max-width: 600px;
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  form {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px var(--shadow);
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 2s ease forwards;
+  }
+
+  input, textarea, button {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: 0.3s ease;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(79,70,229,0.2);
+  }
+
+  textarea {
+    resize: none;
+    min-height: 100px;
+  }
+
+  button {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background: #3730a3;
+  }
+
+  .vouches {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .vouch-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .vouch-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px var(--shadow);
+  }
+
+  .vouch-name {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+
+  .vouch-message {
+    color: #333;
+    line-height: 1.5;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    body {
+      padding: 30px 10px;
     }
 
-    vouchForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const message = document.getElementById('message').value.trim();
-      const ip = await fetch('https://api.ipify.org?format=json').then(res=>res.json()).then(d=>d.ip);
+    h1 {
+      font-size: 2rem;
+    }
 
-      const res = await fetch('/api/vouch', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ name, message, ip })
-      });
+    form {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
 
-      const data = await res.json();
-      if(data.error){
-        alert(data.error);
-        return;
-      }
+<h1>Vouch for Us</h1>
+<p>Share your feedback or vouch for our website. Your words mean a lot and help our community grow!</p>
 
-      toast.style.display='block';
-      setTimeout(()=>toast.style.display='none',3000);
+<form id="vouchForm">
+  <input type="text" id="name" placeholder="Your Name" required>
+  <textarea id="message" placeholder="Your Vouch / Feedback" required></textarea>
+  <button type="submit">Submit Vouch</button>
+</form>
 
-      vouchForm.reset();
-      setTimeout(()=> window.location.href='index.html',3000);
-    });
+<div class="vouches" id="vouchesList">
+  <!-- Submitted vouches will appear here -->
+</div>
 
-    fetchVouches();
-  </script>
+<script>
+  const form = document.getElementById('vouchForm');
+  const vouchesList = document.getElementById('vouchesList');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if(name && message) {
+      const card = document.createElement('div');
+      card.classList.add('vouch-card');
+      card.innerHTML = `<div class="vouch-name">${name}</div><div class="vouch-message">${message}</div>`;
+      vouchesList.prepend(card);
+
+      form.reset();
+    }
+  });
+</script>
+
 </body>
 </html>
