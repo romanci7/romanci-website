@@ -1,214 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>ROMANCI Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romanci Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body {
-  background:#0b0b0b;
-  color:#fff;
-  font-family:Inter,system-ui;
-  margin:0;
-}
-
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-h1 {
-  color:#d4af37;
-  letter-spacing:2px;
-}
-
-.login-box, .panel {
-  background:#141414;
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 0 40px rgba(212,175,55,.12);
-}
-
-input, button {
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-}
-
-input { background:#1d1d1d; color:white; }
-
-button {
-  background:linear-gradient(135deg,#d4af37,#f6e7b5);
-  color:black;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.vouch {
-  border:1px solid rgba(212,175,55,.3);
-  padding:18px;
-  border-radius:14px;
-  margin-top:15px;
-}
-
-.actions button {
-  width:auto;
-  margin-right:10px;
-}
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background: #1c1c1c;
+    padding: 2rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  h1 {
+    color: #f0c419;
+    margin-bottom: 2rem;
+  }
+  input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.6rem 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+  }
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0c419, #f7e07d);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    filter: brightness(1.2);
+  }
+  .popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    z-index: 100;
+  }
+  .popup-content {
+    background: #222;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    animation: pop 0.5s ease;
+  }
+  .popup-content h2 {
+    color: #f0c419;
+    margin-bottom: 1rem;
+  }
+  @keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
 </style>
 </head>
-
 <body>
 
 <div class="container">
-
-<h1>ROMANCI ADMIN</h1>
-
-<!-- LOGIN -->
-<div class="login-box" id="loginBox">
-  <h2>Admin Login</h2>
-  <input id="email" placeholder="Admin Email">
-  <input id="password" type="password" placeholder="Password">
+  <h1>ROMANCI ADMIN</h1>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
   <button id="loginBtn">Login</button>
-  <p id="error" style="color:red;"></p>
 </div>
 
-<!-- PANEL -->
-<div class="panel" id="panel" style="display:none;">
-  <h2>Pending Vouches</h2>
-  <div id="vouches"></div>
-  <button onclick="logout()">Logout</button>
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h2>✅ Thank You!</h2>
+    <p>You are now logged in.</p>
+    <div style="font-size: 2rem; color: #f0c419;">R</div>
+  </div>
 </div>
 
-</div>
-
+<!-- Firebase SDK -->
 <script type="module">
+  // Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-// 🔥 Firebase Imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import { 
-  getFirestore,
-  collection,
-  query,
-  where,
-  onSnapshot,
-  updateDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
-// 🔥 YOUR CONFIG (already from screenshot)
-const firebaseConfig = {
-  apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCvwVo",
+  const firebaseConfig = {
+  apiKey: "AIzaSyCT1_NEA_UIu_1dSTgy5awbGQI-7KCywVo",
   authDomain: "romanci-vouch.firebaseapp.com",
   projectId: "romanci-vouch",
-  storageBucket: "romanci-vouch.appspot.com",
+  storageBucket: "romanci-vouch.firebasestorage.app",
   messagingSenderId: "154787033593",
-  appId: "1:154787033593:web:24d3185cdedfbaded8d28"
+  appId: "1:154787033593:web:0855c02f6c1d7204ed8d28",
+  measurementId: "G-7QWKQ6ZXX3"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
+  const loginBtn = document.getElementById("loginBtn");
+  const popup = document.getElementById("popup");
 
-// 🔐 LOGIN
-document.getElementById("loginBtn").onclick = () => {
+  loginBtn.addEventListener("click", () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-  const email = email.value;
-  const password = password.value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Show popup
+        popup.style.display = "flex";
 
-  signInWithEmailAndPassword(auth, email, password)
-    .catch(err => {
-      document.getElementById("error").innerText = err.message;
-    });
-};
-
-
-// 👀 AUTH STATE
-onAuthStateChanged(auth, user => {
-
-  if(user){
-    loginBox.style.display="none";
-    panel.style.display="block";
-    loadVouches();
-  }
-
-});
-
-
-// 📦 LOAD UNAPPROVED
-function loadVouches(){
-
-  const q = query(
-    collection(db,"vouches"),
-    where("approved","==",false)
-  );
-
-  onSnapshot(q, snap => {
-
-    vouches.innerHTML="";
-
-    snap.forEach(docSnap => {
-
-      const v = docSnap.data();
-
-      const box = document.createElement("div");
-      box.className="vouch";
-
-      box.innerHTML = `
-        <b>${v.name}</b><br>
-        ${v.message}<br><br>
-        <div class="actions">
-          <button onclick="approve('${docSnap.id}')">Approve</button>
-          <button onclick="reject('${docSnap.id}')">Reject</button>
-        </div>
-      `;
-
-      vouches.appendChild(box);
-
-    });
-
+        // Redirect after 2 seconds
+        setTimeout(() => {
+          window.location.href = "admin-panel.html"; // <-- Your real admin page
+        }, 2000);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   });
-
-}
-
-
-// ✅ APPROVE
-window.approve = async (id)=>{
-  await updateDoc(doc(db,"vouches",id),{
-    approved:true
-  });
-};
-
-
-// ❌ REJECT
-window.reject = async (id)=>{
-  await updateDoc(doc(db,"vouches",id),{
-    approved:false,
-    rejected:true
-  });
-};
-
-
-// 🚪 LOGOUT
-window.logout = ()=>{
-  signOut(auth);
-  location.reload();
-};
-
 </script>
 
 </body>
